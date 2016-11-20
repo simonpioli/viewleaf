@@ -4,6 +4,7 @@
 
         .internet-connection__icon {
             @include background-icon('/svg/internet--down.svg');
+            height: 80%;
         }
     }
     @include mod('up') {
@@ -11,6 +12,13 @@
 
         .internet-connection__icon {
             @include background-icon('/svg/internet--up.svg');
+            height: 80%;
         }
+    }
+
+    .internet-connection__label {
+        margin-top: -1vw;
+        text-align: center;
+        opacity: 0.33;
     }
 }

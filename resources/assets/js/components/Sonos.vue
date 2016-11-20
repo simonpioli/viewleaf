@@ -1,23 +1,23 @@
 <template>
     <grid :position="grid" modifiers="transparent">
-        <section :class="addClassModifiers('last-fm', currentlyPlaying ? 'playing' : 'stopped')">
-            <div class="last-fm__content" v-if="currentlyPlaying">
-                <div class="last-fm__cover" v-if="hasCover" v-bind:style="{ backgroundImage: 'url(' + artwork + ')' }">
+        <section :class="addClassModifiers('sonos', currentlyPlaying ? 'playing' : 'stopped')">
+            <div class="sonos__content" v-if="currentlyPlaying">
+                <div class="sonos__cover" v-if="hasCover" v-bind:style="{ backgroundImage: 'url(' + artwork + ')' }">
                 </div>
-                <div class="last-fm__text">
-                    <div class="last-fm__artist">
+                <div class="sonos__text">
+                    <div class="sonos__artist">
                         {{ artist }}
                     </div>
-                    <div class="last-fm__track">
+                    <div class="sonos__track">
                         {{ trackName }}
                     </div>
-                    <span class="last-fm__user">
+                    <span class="sonos__user">
                         {{ userName }}
                     </span>
                 </div>
             </div>
-            <div class="last-fm__empty" v-else></div>
-            <div class="last-fm__background" v-if="hasCover" v-bind:style="{ backgroundImage: 'url(' + artwork + ')' }"></div>
+            <div class="sonos__empty" v-else></div>
+            <div class="sonos__background" v-if="hasCover" v-bind:style="{ backgroundImage: 'url(' + artwork + ')' }"></div>
         </section>
     </grid>
 </template>
@@ -61,10 +61,10 @@ export default {
 
         getEventHandlers() {
             return {
-                'LastFm.NothingPlaying': () => {
+                'Sonos.NothingPlaying': () => {
                     this.artist = '';
                 },
-                'LastFm.TrackIsPlaying': response => {
+                'Sonos.TrackIsPlaying': response => {
                     this.artist = response.trackInfo.artist;
                     this.trackName = response.trackInfo.trackName;
                     this.artwork = response.trackInfo.artwork;
@@ -74,7 +74,7 @@ export default {
         },
 
         getSavedStateId() {
-            return 'last-fm';
+            return 'sonos';
         },
     },
 };

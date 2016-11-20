@@ -30,3 +30,15 @@ export function relativeDate(value) {
 
     return upperFirst(date.fromNow());
 }
+
+export function relativeTime(value) {
+    const date = moment(value);
+
+    const diffInMins = date.diff(moment(), 'minutes');
+
+    if (diffInMins > 120) {
+        return date.format('HH:mm');
+    }
+
+    return upperFirst(date.fromNow());
+}

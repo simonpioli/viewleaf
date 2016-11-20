@@ -1,14 +1,14 @@
 
-.last-fm {
+.sonos {
     height: 100%;
     z-index: 1;
 }
 
-.last-fm__empty {
+.sonos__empty {
     @include background-icon('/svg/music.svg');
 }
 
-.last-fm__background {
+.sonos__background {
     position: absolute;
     top: -50px;
     right: -50px;
@@ -38,7 +38,7 @@
     }
 }
 
-.last-fm__content {
+.sonos__content {
     display: flex;
     align-content: center;
     align-items: center;
@@ -52,7 +52,7 @@
     justify-content: center;
 }
 
-.last-fm__cover {
+.sonos__cover {
     flex-shrink: 0;
     width: 25%;
     margin: setting($grid, cell-padding);
@@ -64,24 +64,24 @@
     box-shadow: 0 1px 10px rgba($black, .25);
 }
 
-.last-fm__text {
+.sonos__text {
     max-width: 90%;
     margin: setting($grid, cell-padding);
 
     transition: width .5s linear;
 }
 
-.last-fm___artist {
+.sonos___artist {
     @include font-sans-black;
 
     font-size: setting($font-size, m);
 }
 
-.last-fm__track {
+.sonos__track {
     font-size: setting($font-size, xs);
 }
 
-.last-fm__user {
+.sonos__user {
     display: inline-block;
     margin-top: 1em;
     padding: .25em .5em;

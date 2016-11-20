@@ -33,38 +33,25 @@ class FetchGoogleCalendarEvents extends Command
     {
         $config = config('laravel-google-calendar');
 
-        $calendarIds = config['calendars'];
+        $calendarIds = $config['calendars'];
 
         foreach ($calendarIds as $key => $cid) {
             $calendars[] = [
-                'id' => 'cid',
-                'events' => collect(Event::get(null, null, null, $cid))
+                'id' => $cid,
+                'events' => collect(Event::get(Carbon::now()->startOfDay(), Carbon::now()->addDays(2)->endOfDay(), [], $cid))
                     ->map(function (Event $event) {
                         return [
-                            'id' => $event->id,
-                            'name' => $event->name,
+                            'id' => $event->googleEvent->getId(),
+                            'summary' => $event->googleEvent->getSummary(),
                             'start' => $event->startDateTime->format(DateTime::ATOM),
                             'end' => $event->endDateTime->format(DateTime::ATOM),
-                            'organiser' => $event->organiser
+                            'creator' => $event->googleEvent->getCreator()
                         ];
                     })
                     ->unique('id')
                     ->toArray()
             ];
         }
-
-        // $events = collect(Event::get())
-        //     ->filter(function (Event $event) {
-        //         return $event->name != 'Poetsvrouwman';
-        //     })->map(function (Event $event) {
-        //         return [
-        //             'name' => $event->name,
-        //             'date' => Carbon::createFromFormat('Y-m-d H:i:s', $event->getSortDate())->format(DateTime::ATOM),
-        //         ];
-        //     })
-        //     ->unique('name')
-        //     ->toArray();
-
         event(new EventsFetched($calendars));
     }
 }

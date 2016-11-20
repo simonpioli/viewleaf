@@ -2,13 +2,12 @@ import './bootstrap.js';
 
 import Echo from 'laravel-echo';
 import Vue from 'vue';
+import _ from 'lodash';
 
 import CurrentTime from './components/CurrentTime';
-import GithubFile from './components/GithubFile';
 import GoogleCalendar from './components/GoogleCalendar';
 import InternetConnection from './components/InternetConnection';
-import LastFm from './components/LastFm';
-import PackagistStatistics from './components/PackagistStatistics';
+import Sonos from './components/Sonos';
 import RainForecast from './components/RainForecast';
 
 new Vue({
@@ -17,11 +16,9 @@ new Vue({
 
     components: {
         CurrentTime,
-        GithubFile,
         GoogleCalendar,
         InternetConnection,
-        LastFm,
-        PackagistStatistics,
+        Sonos,
         RainForecast,
     },
 

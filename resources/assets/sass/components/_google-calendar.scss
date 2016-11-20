@@ -4,6 +4,29 @@
     font-size: setting($font-size, s);
 }
 
+.google-calendar__status {
+
+    i {
+        display: inline-block;
+        margin: 0 0.5vw;
+        height: 1vw;
+        width: 1vw;
+        border-radius: 50%;
+    }
+
+    &.occupied {
+        i {
+            background: color($red);
+        }
+    }
+
+    &.vacant {
+        i {
+            background: color($green);
+        }
+    }
+}
+
 .google-calendar__event {
     padding-bottom: 1.5vh;
 }

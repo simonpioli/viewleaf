@@ -5,22 +5,17 @@
     @javascript(compact('pusherKey'))
 
     <div class="dashboard" id="dashboard">
-            <google-calendar grid="a1:a2"></google-calendar>
+            <google-calendar calendarId="blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com" grid="a1:b3"></google-calendar>
 
-            <last-fm grid="b1:c1"></last-fm>
+            {{-- <google-calendar calendarId="" grid="c1:d3"></google-calendar>
 
-            <current-time grid="d1" dateformat="ddd DD/MM"></current-time>
+            <google-calendar calendarId="blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com" grid="e1:f3"></google-calendar> --}}
 
-            <packagist-statistics grid="b2"></packagist-statistics>
+            <current-time grid="g1:h1" dateformat="ddd DD/MM"></current-time>
 
-            <rain-forecast grid="c2"></rain-forecast>
+            <internet-connection grid="g2:h2"></internet-connection>
 
-            <internet-connection grid="d2"></internet-connection>
-
-            <github-file file-name="freek" grid="a3"></github-file>
-            <github-file file-name="rogier" grid="b3"></github-file>
-            <github-file file-name="seb" grid="c3"></github-file>
-            <github-file file-name="willem" grid="d3"></github-file>
+            <sonos grid="g3:h3"></sonos>
     </div>
 
 @endsection

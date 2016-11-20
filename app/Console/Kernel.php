@@ -13,12 +13,12 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Components\GitHub\FetchGitHubFileContent::class,
+        // \App\Components\GitHub\FetchGitHubFileContent::class,
         \App\Components\GoogleCalendar\FetchGoogleCalendarEvents::class,
-        \App\Components\LastFm\FetchCurrentTrack::class,
-        \App\Components\Packagist\FetchTotals::class,
+        // \App\Components\LastFm\FetchCurrentTrack::class,
+        // \App\Components\Packagist\FetchTotals::class,
         \App\Components\InternetConnectionStatus\SendHeartbeat::class,
-        \App\Components\RainForecast\FetchRainForecast::class,
+        // \App\Components\RainForecast\FetchRainForecast::class,
     ];
 
     /**
@@ -28,11 +28,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('dashboard:lastfm')->everyMinute();
-        $schedule->command('dashboard:calendar')->everyFiveMinutes();
-        $schedule->command('dashboard:github')->everyFiveMinutes();
+        // $schedule->command('dashboard:lastfm')->everyMinute();
+        $schedule->command('dashboard:calendar')->everyFiveMinutes()->sendOutputTo(storage_path('logs').'/calendar.log');
+        // $schedule->command('dashboard:github')->everyFiveMinutes();
         $schedule->command('dashboard:heartbeat')->everyMinute();
-        $schedule->command('dashboard:packagist')->hourly();
-        $schedule->command('dashboard:rain')->everyMinute();
+        // $schedule->command('dashboard:packagist')->hourly();
+        // $schedule->command('dashboard:rain')->everyMinute();
     }
 }
