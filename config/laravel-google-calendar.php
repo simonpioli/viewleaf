@@ -11,5 +11,9 @@ return [
      *  The id of the Google Calendar that will be used by default.
      */
     'calendar_id' => env('GOOGLE_CALENDAR_ID'),
-    
+
+    'calendars' => [
+        'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs', // Large
+        'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4', // Little little
+    ]
 ];
