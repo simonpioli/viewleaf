@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\LastFm;
+namespace App\Events\Sonos;
 
 use App\Events\DashboardEvent;
 

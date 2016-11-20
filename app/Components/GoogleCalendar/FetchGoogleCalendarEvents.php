@@ -38,7 +38,10 @@ class FetchGoogleCalendarEvents extends Command
         foreach ($calendarIds as $key => $cid) {
             $calendars[] = [
                 'id' => $cid,
-                'events' => collect(Event::get(Carbon::now()->startOfDay(), Carbon::now()->addDays(2)->endOfDay(), [], $cid))
+                'events' => collect(Event::get(Carbon::now()->startOfDay(), Carbon::now()->addDays(2)->endOfDay(), ['singleEvents' => false], $cid))
+                    ->reject(function(Event $event) {
+                        return $event->endDateTime < Carbon::now();
+                    })
                     ->map(function (Event $event) {
                         return [
                             'id' => $event->googleEvent->getId(),
@@ -49,6 +52,7 @@ class FetchGoogleCalendarEvents extends Command
                         ];
                     })
                     ->unique('id')
+
                     ->toArray()
             ];
         }

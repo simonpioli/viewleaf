@@ -1,28 +1,33 @@
 <template>
     <grid :position="grid" modifiers="overflow padded blue">
        <section class="google-calendar">
-           <!-- <h1>{{ calendarName }}</h1> -->
-           <h1>Large Meeting Room</h1>
-           <h2 class="google-calendar__status occupied"><i></i>Occupied</h2>
+           <h1>{{ calendarName }}</h1>
+           <h2 v-if="occupied == true" class="google-calendar__status occupied"><i></i>Occupied</h2>
+           <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available</h2>
            <ul class="google-calendar__events">
-               <li v-for="event in events"  class="google-calendar__event">
-                   <h2 class="google-calendar__event__title">
-                    {{ event.summary }}
-                    <span class="google-calendar__event__date">{{  }}</span>
-                   </h2>
-                   <div class="google-calendar__event__date">{{ event.start }} - {{ event.end }}</div>
-               </li>
-               <li vfor="e, i in ['Event 1', 'Event 2', 'Event 3', 'Event 4', 'Event 5', 'Event 6', 'Event 7', 'Event 8', 'Event 9', 'Event 10']" class="google-calendar__event">
-                   <h2 class="google-calendar__event__title">Event {{ i }}: {{ e }}</h2>
-                   <div class="google-calendar__event__date">{{ relativeTime('2016-11-20T20:30') }}</div>
-               </li>
+              <li v-if="events.length == 0" class="google-calendar__event--error">
+                  <h2 class="google-calendar__event__title">No events found</h2>
+              </li>
+              <li v-for="event in events"  class="google-calendar__event">
+                <div class="google-calendar__event__date">
+                  {{ timeFormat(event.start, event.end) }}
+                  <!-- <span class="google-calendar__event__status" v-if="nowNext(event) == false">
+                    {{ nowNext(event, events) }}
+                  </span> -->
+                </div>
+                <h2 class="google-calendar__event__title">
+                  {{ event.summary }} This is a summary
+                  <span  class="google-calendar__event__next"></span>
+                </h2>
+
+              </li>
            </ul>
        </section>
     </grid>
 </template>
 
 <script>
-import { relativeDate, relativeTime } from '../helpers';
+import { timeFormat, relativeTime } from '../helpers';
 import Echo from '../mixins/echo';
 import Grid from './Grid';
 import SaveState from '../mixins/save-state';
@@ -41,6 +46,7 @@ export default {
         return {
             calendarName: '',
             events: [],
+            occupied: false,
             calendarMap: {
               'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': 'Large Meeting Room',
               'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': 'Little Little Meeting Room'
@@ -49,19 +55,32 @@ export default {
     },
 
     methods: {
-        relativeDate,
+        timeFormat,
         relativeTime,
+        // nowNext,
 
         getEventHandlers() {
             return {
                 'GoogleCalendar.EventsFetched': response => {
-                    console.log(response.events);
-                    // calIndex = _.findIndex(response.events, [id, this.calendarId]);
-                    this.calendarName = this.calendarMap[this.calendarId];
+                    var targetId = this.calendarId;
+                    var calIndex = _.findIndex(response.events, function(o) {
+                      return o.id == targetId;
+                    });
+                    this.calendarName = this.calendarMap[targetId];
                     if (calIndex > -1) {
                       this.events = response.events[calIndex].events;
+                      var currentEvIndex = _.findIndex(this.events, function(o, moment) {
+                        var now = moment();
+                        return now.isBetween(moment(o.start), moment(o.end));
+                      });
+                      if (currentEvIndex > -1) {
+                        this.occupied = true;
+                      } else {
+                        this.occupied = false;
+                      }
                     } else {
                       this.events = [];
+                      this.occupied = false;
                     }
                 },
             };

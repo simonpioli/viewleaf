@@ -5,7 +5,7 @@
     @javascript(compact('pusherKey'))
 
     <div class="dashboard" id="dashboard">
-            <google-calendar calendarId="blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com" grid="a1:b3"></google-calendar>
+            <google-calendar calendar-id="blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com" grid="a1:b3"></google-calendar>
 
             {{-- <google-calendar calendarId="" grid="c1:d3"></google-calendar>
 

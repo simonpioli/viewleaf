@@ -5,6 +5,7 @@
 }
 
 .google-calendar__status {
+    margin-bottom: 1.5vh;
 
     i {
         display: inline-block;
@@ -20,9 +21,9 @@
         }
     }
 
-    &.vacant {
+    &.available {
         i {
-            background: color($green);
+            background: color($green, bright);
         }
     }
 }

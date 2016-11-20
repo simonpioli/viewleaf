@@ -12,7 +12,7 @@
                         {{ trackName }}
                     </div>
                     <span class="sonos__user">
-                        {{ userName }}
+                        {{ position }} / {{ duration }}
                     </span>
                 </div>
             </div>
@@ -43,7 +43,8 @@ export default {
             artist: '',
             trackName: '',
             artwork: '',
-            userName: '',
+            duration: '',
+            position: ''
         };
     },
 
@@ -66,9 +67,10 @@ export default {
                 },
                 'Sonos.TrackIsPlaying': response => {
                     this.artist = response.trackInfo.artist;
-                    this.trackName = response.trackInfo.trackName;
-                    this.artwork = response.trackInfo.artwork;
-                    this.userName = response.userName;
+                    this.trackName = response.trackInfo.title;
+                    this.artwork = response.trackInfo.albumArt;
+                    this.duration = response.trackInfo.duration;
+                    this.position = response.trackInfo.position;
                 },
             };
         },
