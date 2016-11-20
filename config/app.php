@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/London',
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -162,13 +162,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-
-        //
 
         /*
          * Application Service Providers...
@@ -178,7 +171,12 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Spatie\Tail\TailServiceProvider::class,
+        Spatie\GoogleCalendar\GoogleCalendarServiceProvider::class,
+        GrahamCampbell\GitHub\GitHubServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        \App\Providers\CollectionServiceProvider::class,
+        \Spatie\BladeJavaScript\BladeJavaScriptServiceProvider::class,
     ],
 
     /*
@@ -198,7 +196,6 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
-        'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
@@ -226,7 +223,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'GoogleCalendar' => Spatie\GoogleCalendar\GoogleCalendarFacade::class,
+        'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
     ],
 
 ];

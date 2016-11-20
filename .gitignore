@@ -1,8 +1,27 @@
-/node_modules
 /public/storage
 /storage/*.key
 /vendor
 /.idea
 Homestead.json
 Homestead.yaml
+# DEV
 .env
+.idea
+_ide_helper*.php
+.phpstorm.meta.php
+
+# BACK END
+/vendor
+
+# FRONT END
+/node_modules
+/npm-debug.log
+/public/build
+/resources/assets/css
+/public/css
+/public/js
+/public/doc/sass
+/public/media
+
+# REMOVE THIS LINE IN PROJECTS
+/resources/assets/js/back/redactor

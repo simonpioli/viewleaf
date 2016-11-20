@@ -1,35 +1,34 @@
+import './bootstrap.js';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
+import Echo from 'laravel-echo';
+import Vue from 'vue';
 
-require('./bootstrap');
+import CurrentTime from './components/CurrentTime';
+import GithubFile from './components/GithubFile';
+import GoogleCalendar from './components/GoogleCalendar';
+import InternetConnection from './components/InternetConnection';
+import LastFm from './components/LastFm';
+import PackagistStatistics from './components/PackagistStatistics';
+import RainForecast from './components/RainForecast';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+new Vue({
 
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue')
-);
+    el: '#dashboard',
 
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue')
-);
+    components: {
+        CurrentTime,
+        GithubFile,
+        GoogleCalendar,
+        InternetConnection,
+        LastFm,
+        PackagistStatistics,
+        RainForecast,
+    },
 
-Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
-);
-
-Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: '#app'
+    created() {
+        this.echo = new Echo({
+            broadcaster: 'pusher',
+            key: window.dashboard.pusherKey,
+        });
+    },
 });

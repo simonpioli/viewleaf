@@ -13,28 +13,26 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Components\GitHub\FetchGitHubFileContent::class,
+        \App\Components\GoogleCalendar\FetchGoogleCalendarEvents::class,
+        \App\Components\LastFm\FetchCurrentTrack::class,
+        \App\Components\Packagist\FetchTotals::class,
+        \App\Components\InternetConnectionStatus\SendHeartbeat::class,
+        \App\Components\RainForecast\FetchRainForecast::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-    }
-
-    /**
-     * Register the Closure based commands for the application.
-     *
-     * @return void
-     */
-    protected function commands()
-    {
-        require base_path('routes/console.php');
+        $schedule->command('dashboard:lastfm')->everyMinute();
+        $schedule->command('dashboard:calendar')->everyFiveMinutes();
+        $schedule->command('dashboard:github')->everyFiveMinutes();
+        $schedule->command('dashboard:heartbeat')->everyMinute();
+        $schedule->command('dashboard:packagist')->hourly();
+        $schedule->command('dashboard:rain')->everyMinute();
     }
 }
