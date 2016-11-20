@@ -8,7 +8,7 @@ class Announcement extends DashboardEvent
     public $posted;
     public $message;
 
-    public function __construct()
+    public function __construct(array $message)
     {
 
     }

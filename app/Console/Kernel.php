@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Components\GoogleCalendar\FetchGoogleCalendarEvents::class,
         \App\Components\Sonos\FetchCurrentTrack::class,
-        // \App\Components\Slack\FetchLatestAnnouncements::class,
+        \App\Components\Slack\FetchLatestAnnouncement::class,
         \App\Components\InternetConnectionStatus\SendHeartbeat::class,
         // \App\Components\RainForecast\FetchRainForecast::class,
     ];

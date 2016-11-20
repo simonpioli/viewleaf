@@ -37,6 +37,10 @@ return [
 
     'slack' => [
         'token' => env('SLACK_TOKEN'),
+        'channels' => [
+            'C2LG5BF0B', // bl-cheshire
+            'C04D71B27' //bl-tannoy
+        ]
     ]
 
 ];

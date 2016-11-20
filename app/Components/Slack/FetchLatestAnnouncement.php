@@ -2,6 +2,10 @@
 
 namespace App\Components\Slack;
 
+use Illuminate\Console\Command;
+use Carbon\Carbon;
+use Vluzrmos\SlackApi\Facades\SlackChannel;
+
 class FetchLatestAnnouncement extends Command
 {
     /**
@@ -25,7 +29,14 @@ class FetchLatestAnnouncement extends Command
      */
     public function handle()
     {
-
+        $channels = config('services.slack.channels');
+        // dump($channels);
+        // dump(SlackChannel::all());
+        $earliest = Carbon::now()->subDays(14)->startOfDay()->format('U');
+        foreach ($channels as $key => $channel) {
+            $history = SlackChannel::history($channel, 500, null, $earliest);
+            dump($history);
+        }
         return false;
         event();
     }
