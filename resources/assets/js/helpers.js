@@ -34,10 +34,9 @@ export function relativeDate(value) {
 export function relativeTime(value) {
     const date = moment(value);
 
-    const diffInMins = date.diff(moment(), 'minutes');
-
-    if (diffInMins > 59) {
-        return date.format('HH:mm');
+    const diffInDays = date.diff(moment(), 'days');
+    if (diffInDays > 15 || diffInDays < -15) {
+        return date.format('DD/MM/YYYY HH:mm');
     }
 
     return upperFirst(date.fromNow());
@@ -49,7 +48,7 @@ export function timeFormat(startString, endString) {
     const today = moment().endOf('day');
 
     if (start.isAfter(today)) {
-        return start.fromNow();
+        return start.calendar();
     }
     return start.format('HH:mm') + ' - ' + end.format('HH:mm');
 }

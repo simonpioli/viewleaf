@@ -18,5 +18,12 @@ class FetchLatestAnnouncement extends Command
      */
     protected $description = 'Fetch the latest announcement (ie a post with @channel in the #bl-tannoy or #bl-cheshire channels).';
 
-
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+    }
 }

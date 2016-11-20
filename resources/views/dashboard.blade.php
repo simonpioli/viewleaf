@@ -16,6 +16,8 @@
             <internet-connection grid="g2:h2"></internet-connection>
 
             <sonos grid="g3:h3"></sonos>
+
+            <slack grid="a4:h4"></slack>
     </div>
 
 @endsection

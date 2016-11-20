@@ -8,7 +8,7 @@ moment.updateLocale('en', {
         nextDay: '[Tomorrow]',
         lastWeek: '[last] dddd',
         nextWeek: 'dddd',
-        sameElse: 'L',
+        sameElse: 'DD/MM/YYYY',
     },
 });
 

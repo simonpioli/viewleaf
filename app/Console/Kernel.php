@@ -13,10 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // \App\Components\GitHub\FetchGitHubFileContent::class,
         \App\Components\GoogleCalendar\FetchGoogleCalendarEvents::class,
         \App\Components\Sonos\FetchCurrentTrack::class,
-        // \App\Components\Packagist\FetchTotals::class,
+        // \App\Components\Slack\FetchLatestAnnouncements::class,
         \App\Components\InternetConnectionStatus\SendHeartbeat::class,
         // \App\Components\RainForecast\FetchRainForecast::class,
     ];
@@ -30,9 +29,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('dashboard:sonos')->everyMinute();
         $schedule->command('dashboard:calendar')->everyFiveMinutes()->sendOutputTo(storage_path('logs').'/calendar.log');
-        // $schedule->command('dashboard:github')->everyFiveMinutes();
+        // $schedule->command('dashboard:slack')->everyFiveMinutes();
         $schedule->command('dashboard:heartbeat')->everyMinute();
-        // $schedule->command('dashboard:packagist')->hourly();
         // $schedule->command('dashboard:rain')->everyMinute();
     }
 }
