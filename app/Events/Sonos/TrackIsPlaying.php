@@ -3,7 +3,7 @@
 namespace App\Events\Sonos;
 
 use App\Events\DashboardEvent;
-use ;
+use duncan3dc\Sonos\State;
 
 class TrackIsPlaying extends DashboardEvent
 {

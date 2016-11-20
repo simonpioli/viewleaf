@@ -25,5 +25,8 @@ class FetchLatestAnnouncement extends Command
      */
     public function handle()
     {
+
+        return false;
+        event();
     }
 }
