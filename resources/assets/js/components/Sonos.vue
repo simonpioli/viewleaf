@@ -64,6 +64,10 @@ export default {
             return {
                 'Sonos.NothingPlaying': () => {
                     this.artist = '';
+                    this.trackName = '';
+                    this.artwork = '';
+                    this.duration = '';
+                    this.position = '';
                 },
                 'Sonos.TrackIsPlaying': response => {
                     this.artist = response.trackInfo.artist;

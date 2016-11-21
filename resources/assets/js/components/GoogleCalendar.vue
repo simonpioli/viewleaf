@@ -16,7 +16,7 @@
                   </span> -->
                 </div>
                 <h2 class="google-calendar__event__title">
-                  {{ event.summary }} This is a summary
+                  {{ event.summary }}
                   <span  class="google-calendar__event__next"></span>
                 </h2>
 
@@ -56,6 +56,12 @@ export default {
         };
     },
 
+    computed: {
+      calendarName: function() {
+        return this.calendarMap[this.calendarId];
+      }
+    },
+
     methods: {
         timeFormat,
         relativeTime,
@@ -64,12 +70,11 @@ export default {
         getEventHandlers() {
             return {
                 'GoogleCalendar.EventsFetched': response => {
-                    console.log(response);
                     var targetId = this.calendarId;
                     var calIndex = _.findIndex(response.events, function(o) {
                       return o.id == targetId;
                     });
-                    this.calendarName = this.calendarMap[targetId];
+
                     if (calIndex > -1) {
                       this.events = response.events[calIndex].events == null ? [] : response.events[calIndex].events;
                       this.occupied = false;
@@ -78,16 +83,9 @@ export default {
                         return _now.isBetween(moment(o.start), moment(o.end));
                       });
 
-                      console.log(occupiedIndex);
-
                       if (occupiedIndex > -1) {
                         this.occupied = true;
                       }
-
-                      // var currentEvIndex = _.findIndex(this.events, function(o) {
-                      //   var now = moment();
-                      //   return now.isBetween(moment(o.start), moment(o.end));
-                      // });
                     } else {
                       this.events = [];
                       this.occupied = false;

@@ -1,5 +1,5 @@
 <template>
-    <grid :position="grid" modifiers="padded white">
+    <grid :position="grid" modifiers="padded white overflow">
         <section v-if="message != ''" class="slack">
             <h2 class="slack__header">Latest Announcement</h2>
             <p class="slack__meta">
@@ -34,9 +34,9 @@ export default {
 
     data() {
         return {
-            message: 'Hello @channel we have LA visiting the office on Weds next week, the new Head of IT Colin Rice and David Williams IT Manager will be here for  most of the day. We need to make an extra good impression as Colin is new to LA and needs to see how amazing we all are. Can everyone who would normally work from home, or is planning to, please work from the office that day so we look nice and full. Thanks in advance :slightly_smiling_face:',
-            from: 'Verity Maybury',
-            posted: moment('2016-07-13T13:19:00')
+            message: 'Loading Slack Messages...',
+            from: 'No-One Yet',
+            posted: 'A long time ago'
         }
     },
 
@@ -48,8 +48,9 @@ export default {
         getEventHandlers() {
             return {
                 'Slack.Announcement': response => {
-                    console.log(response);
-                    return false;
+                    this.from = response.from;
+                    this.message = response.message;
+                    this.posted = moment(response.posted);
                 }
             }
         },

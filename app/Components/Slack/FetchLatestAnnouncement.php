@@ -5,6 +5,8 @@ namespace App\Components\Slack;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Vluzrmos\SlackApi\Facades\SlackChannel;
+use Vluzrmos\SlackApi\Facades\SlackUser;
+use App\Events\Slack\Announcement;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -30,14 +32,25 @@ class FetchLatestAnnouncement extends Command
     public function handle()
     {
         $channels = config('services.slack.channels');
-        // dump($channels);
-        // dump(SlackChannel::all());
         $earliest = Carbon::now()->subDays(14)->startOfDay()->format('U');
+        $messages = collect();
         foreach ($channels as $key => $channel) {
-            $history = SlackChannel::history($channel, 500, null, $earliest);
-            dump($history);
+            $history = SlackChannel::history($channel, 250, null, $earliest);
+            $message = $messages->push(collect($history->messages)
+                ->filter(function ($msg) {
+                    return !!stristr($msg->text, '<!channel>');
+                })
+                ->map(function ($msg) {
+                    return [
+                        'message' => $msg->text,
+                        'from' => property_exists($msg, 'user') ? SlackUser::info($msg->user)->user->real_name : '',
+                        'posted' => Carbon::createFromTimestamp($msg->ts)->toDateTimeString()
+                    ];
+                })
+                ->pop());
+
         }
-        return false;
-        event();
+        $messages->sortByDesc('posted');
+        event(new Announcement($messages->first()));
     }
 }
