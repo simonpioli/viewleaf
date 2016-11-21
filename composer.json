@@ -7,6 +7,12 @@
     ],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/simonpioli/laravel-google-calendar"
+        }
+    ],
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-ide-helper": "^2.1",
@@ -18,7 +24,7 @@
         "pda/pheanstalk": "^3.1",
         "pusher/pusher-php-server": "^2.3",
         "spatie/laravel-blade-javascript": "^1.0",
-        "spatie/laravel-google-calendar": "^1.0",
+        "simonpioli/laravel-google-calendar": "dev-master",
         "spatie/laravel-tail": "^1.1",
         "vluzrmos/slack-api": "^0.4.8"
     },

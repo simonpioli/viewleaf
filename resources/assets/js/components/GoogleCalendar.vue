@@ -50,6 +50,7 @@ export default {
             occupied: false,
             calendarMap: {
               'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': 'Large Meeting Room',
+              'blue-leaf.co.uk_9ffftu2t7do5dhi2jdn61jpsho@group.calendar.google.com': 'Small Meeting Room',
               'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': 'Little Little Meeting Room'
             }
         };
@@ -63,22 +64,30 @@ export default {
         getEventHandlers() {
             return {
                 'GoogleCalendar.EventsFetched': response => {
+                    console.log(response);
                     var targetId = this.calendarId;
                     var calIndex = _.findIndex(response.events, function(o) {
                       return o.id == targetId;
                     });
                     this.calendarName = this.calendarMap[targetId];
                     if (calIndex > -1) {
-                      this.events = response.events[calIndex].events;
-                      var currentEvIndex = _.findIndex(this.events, function(o) {
-                        var now = moment();
-                        return now.isBetween(moment(o.start), moment(o.end));
+                      this.events = response.events[calIndex].events == null ? [] : response.events[calIndex].events;
+                      this.occupied = false;
+                      var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
+                        var _now = moment();
+                        return _now.isBetween(moment(o.start), moment(o.end));
                       });
-                      if (currentEvIndex > -1) {
+
+                      console.log(occupiedIndex);
+
+                      if (occupiedIndex > -1) {
                         this.occupied = true;
-                      } else {
-                        this.occupied = false;
                       }
+
+                      // var currentEvIndex = _.findIndex(this.events, function(o) {
+                      //   var now = moment();
+                      //   return now.isBetween(moment(o.start), moment(o.end));
+                      // });
                     } else {
                       this.events = [];
                       this.occupied = false;
@@ -88,7 +97,7 @@ export default {
         },
 
         getSavedStateId() {
-            return 'google-calendar';
+            return 'google-calendar-' + this.calendarId;
         },
     },
 };
