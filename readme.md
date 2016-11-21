@@ -1,34 +1,17 @@
-# dashboard.spatie.be
+# Viewleaf Dashboard
 
-This repo contains the source code of https://dashboard.spatie.be
+This repo contains the source code of our TV Dashboard.
 
-## Example
-
-<img style="max-width:100%; height: auto" src="http://spatie.github.io/dashboard.spatie.be/images/screenshot.png">
+## Specification
 
 Our configured dashboard has following tiles:
 
-- Team calendar via [Google Calendar](https://google.com/calendar)
-- Music currently playing via [Last.fm](https://last.fm)
+- Meeting Rook calendar (currently free/busy only) via [Google Calendar](https://google.com/calendar)
+- Music currently playing on the Sonos
 - Clock/date
-- Team todo's via GitHub files
-- [Packagist](https://packagist.org/) stars and total downloads
-- Rain forecast (for the bikers amongst us) via [buienradar.nl](http://buienradar.nl)
+- Latest 'announcement' from Slack. Currently set as the most recent post from either Tannoy or Cheshire with '@channel' in the message
 - Internet up/down via WebSockets
 
-## Postcardware
+## Installation
 
-If you are using our dashboard, please send us a postcard from your hometown.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-The best postcards will get published on the open source page on our website.
-
-## Support
-This dashboard is tailormade this be displayed on the wall mounted tv in our office. We do not follow semver for this project and do not provide support whatsoever. However if you're a bit familiar with Laravel and Vue you should easily find your way.
-
-For more details on the project, read our articles about the [setup and components](https://murze.be/2016/06/building-dashboard-using-laravel-vue/) or the [custom grid design](https://murze.be/2016/06/grid-layout-dashboard/).
-
-## License
-
-This project and the Laravel framework are open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Coming soon... There are lots and lots of keys and variables to set up.
