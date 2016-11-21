@@ -13,28 +13,43 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Components\GoogleCalendar\FetchGoogleCalendarEvents::class,
+        \App\Components\Sonos\FetchCurrentTrack::class,
+        \App\Components\Slack\FetchLatestAnnouncement::class,
+        \App\Components\InternetConnectionStatus\SendHeartbeat::class,
+        // \App\Components\RainForecast\FetchRainForecast::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-    }
+        $schedule->command('dashboard:sonos')
+            ->cron('*/5 * * * *');
+            ->weekdays()
+            ->between('7:00', '18:00');
 
-    /**
-     * Register the Closure based commands for the application.
-     *
-     * @return void
-     */
-    protected function commands()
-    {
-        require base_path('routes/console.php');
+        $schedule->command('dashboard:calendar')
+            ->everyFiveMinutes();
+            ->weekdays()
+            ->between('7:00', '18:00');
+
+        $schedule->command('dashboard:slack')
+            ->everyFiveMinutes();
+            ->weekdays()
+            ->between('7:00', '18:00');
+
+        $schedule->command('dashboard:heartbeat')
+            ->everyMinute();
+            ->weekdays()
+            ->between('7:00', '18:00');
+
+        // $schedule->command('dashboard:rain')
+        //     ->everyMinute()
+        //     ->weekdays()
+        //     ->between('7:00', '18:00');
     }
 }

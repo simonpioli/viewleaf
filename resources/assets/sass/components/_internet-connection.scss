@@ -1,0 +1,25 @@
+.internet-connection {
+    @include mod('down') {
+        background-color: color($red);
+
+        .internet-connection__icon {
+            @include background-icon('/svg/internet--down.svg');
+            background-size: 55%;
+            height: 75%;
+        }
+    }
+    @include mod('up') {
+        background-color: color($green, darker);
+
+        .internet-connection__icon {
+            @include background-icon('/svg/internet--up.svg');
+            height: 75%;
+        }
+    }
+
+    .internet-connection__label {
+        margin-top: -1vw;
+        text-align: center;
+        opacity: 0.33;
+    }
+}

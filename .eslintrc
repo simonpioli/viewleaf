@@ -1,0 +1,14 @@
+{
+    "extends": "spatie",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "$": true,
+        "jQuery": true
+    },
+    "plugins": [
+        "vue"
+    ]
+}

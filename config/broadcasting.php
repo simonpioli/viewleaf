@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,8 +36,9 @@ return [
             'secret' => env('PUSHER_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
-                //
-            ],
+                'cluster' => env('PUSHER_HOST'),
+                'encrypted' => true
+            ]
         ],
 
         'redis' => [
@@ -47,10 +48,6 @@ return [
 
         'log' => [
             'driver' => 'log',
-        ],
-
-        'null' => [
-            'driver' => 'null',
         ],
 
     ],

@@ -1,0 +1,37 @@
+.google-calendar__events {
+    color: color($blue, light);
+
+    font-size: setting($font-size, s);
+}
+
+.google-calendar__status {
+    margin-bottom: 1.5vh;
+
+    i {
+        display: inline-block;
+        margin: 0 0.5vw;
+        height: 1vw;
+        width: 1vw;
+        border-radius: 50%;
+    }
+
+    &.occupied {
+        i {
+            background: color($red);
+        }
+    }
+
+    &.available {
+        i {
+            background: color($green, bright);
+        }
+    }
+}
+
+.google-calendar__event {
+    padding-bottom: 1.5vh;
+}
+
+.google-calendar__event__title {
+    @include font-sans-bold;
+}
