@@ -11,11 +11,11 @@
 
             <google-calendar calendarId="blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com" grid="e1:f3"></google-calendar> --}}
 
-            <current-time grid="g1:h1" dateformat="ddd DD/MM"></current-time>
+            <current-time grid="g1" dateformat="ddd DD/MM"></current-time>
 
-            <internet-connection grid="g2:h2"></internet-connection>
+            <internet-connection grid="h1"></internet-connection>
 
-            <sonos grid="g3:h3"></sonos>
+            <sonos grid="g2:h2"></sonos>
 
             <slack grid="a4:h4"></slack>
     </div>

@@ -41,7 +41,7 @@ export default {
         determineConnectionStatus() {
             const lastHeartBeatReceivedSecondsAgo = moment().diff(this.lastHeartBeatReceivedAt, 'seconds');
 
-            this.online = lastHeartBeatReceivedSecondsAgo < 125;
+            this.online = lastHeartBeatReceivedSecondsAgo < 120;
         },
 
         getEventHandlers() {

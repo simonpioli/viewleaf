@@ -1,7 +1,11 @@
 .current-time__content {
     @include position-center;
-
+    width: 100%;
     text-align: center;
+
+    span {
+        display: block;
+    }
 }
 
 .current-time__time {
