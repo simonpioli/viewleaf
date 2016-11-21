@@ -6,6 +6,7 @@ use App\Events\Sonos\NothingPlaying;
 use App\Events\Sonos\TrackIsPlaying;
 use Illuminate\Console\Command;
 use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Controller;
 
 class FetchCurrentTrack extends Command
 {
@@ -31,6 +32,7 @@ class FetchCurrentTrack extends Command
     public function handle()
     {
         $sonos = new Network;
+        $sonos->setNetworkInterface(config('sonos.network'));
 
         $controller = $sonos->getControllerByRoom(config('sonos.controller'));
 

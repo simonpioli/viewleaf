@@ -31,6 +31,7 @@ import { timeFormat, relativeTime } from '../helpers';
 import Echo from '../mixins/echo';
 import Grid from './Grid';
 import SaveState from '../mixins/save-state';
+import moment from 'moment';
 
 export default {
 
@@ -69,7 +70,7 @@ export default {
                     this.calendarName = this.calendarMap[targetId];
                     if (calIndex > -1) {
                       this.events = response.events[calIndex].events;
-                      var currentEvIndex = _.findIndex(this.events, function(o, moment) {
+                      var currentEvIndex = _.findIndex(this.events, function(o) {
                         var now = moment();
                         return now.isBetween(moment(o.start), moment(o.end));
                       });
