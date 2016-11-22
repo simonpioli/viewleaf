@@ -28,22 +28,22 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('dashboard:sonos')
-            ->cron('*/5 * * * *');
+            ->cron('*/5 * * * *')
             ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:calendar')
-            ->everyFiveMinutes();
+            ->everyFiveMinutes()
             ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:slack')
-            ->everyFiveMinutes();
+            ->everyFiveMinutes()
             ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:heartbeat')
-            ->everyMinute();
+            ->everyMinute()
             ->weekdays()
             ->between('7:00', '18:00');
 
