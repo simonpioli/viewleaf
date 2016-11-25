@@ -6,20 +6,15 @@
            <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available</h2>
            <ul class="google-calendar__events">
               <li v-if="events.length == 0" class="google-calendar__event--error">
-                  <h2 class="google-calendar__event__title">No events found</h2>
+                  <h2 class="google-calendar__event__title">No bookings found</h2>
               </li>
-              <li v-for="event in events"  class="google-calendar__event">
+              <li v-for="(event, index) in events" v-if="index == 0" class="google-calendar__event">
+                <h2 class="google-calendar__event__title">
+                  Next booking
+                </h2>
                 <div class="google-calendar__event__date">
                   {{ timeFormat(event.start, event.end) }}
-                  <!-- <span class="google-calendar__event__status" v-if="nowNext(event) == false">
-                    {{ nowNext(event, events) }}
-                  </span> -->
                 </div>
-                <h2 class="google-calendar__event__title">
-                  {{ event.summary }}
-                  <span  class="google-calendar__event__next"></span>
-                </h2>
-
               </li>
            </ul>
        </section>
@@ -76,7 +71,7 @@ export default {
                     });
 
                     if (calIndex > -1) {
-                      this.events = response.events[calIndex].events == null ? [] : response.events[calIndex].events;
+                      this.events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
                       this.occupied = false;
                       var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
                         var _now = moment();
