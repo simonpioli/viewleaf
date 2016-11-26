@@ -72,7 +72,7 @@
 }
 
 .sonos___artist {
-    @include font-sans-black;
+    @include font-sans-bold;
 
     font-size: setting($font-size, m);
 }

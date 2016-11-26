@@ -41,7 +41,7 @@ h1 {
 }
 
 h2 {
-    @include font-sans-black;
+    @include font-sans-bold;
 
     color: $white;
 
