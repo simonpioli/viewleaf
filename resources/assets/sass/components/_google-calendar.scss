@@ -1,5 +1,6 @@
 .google-calendar {
     h1 {
+        color: color($gray, lighter);
         font-size: 1.5vw;
 
         span {
@@ -11,13 +12,15 @@
 }
 
 .google-calendar__events {
-    color: color($blue, light);
+    color: color($gray, lightest);
 
     font-size: setting($font-size, s);
 }
 
 .google-calendar__status {
     margin-bottom: 1.5vh;
+    font-size: 1.5vw;
+    // color: color($gray, lightest);
 
     i {
         display: inline-block;
@@ -46,4 +49,5 @@
 
 .google-calendar__event__title {
     @include font-sans-bold;
+    // color: color($gray, darkest);
 }

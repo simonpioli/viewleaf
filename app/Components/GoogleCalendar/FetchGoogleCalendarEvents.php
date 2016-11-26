@@ -49,7 +49,6 @@ class FetchGoogleCalendarEvents extends Command
         foreach ($calendarIds as $key => $cid) {
             $fb = null;
             $fbObject = $this->calendar->busy(null, null, $cid)->getCalendars();
-            dump($fbObject);
             if (!empty($fbObject)) {
                 $fbCalendar = $fbObject[$cid]->getBusy();
                 $fb = collect($fbCalendar)
@@ -81,13 +80,9 @@ class FetchGoogleCalendarEvents extends Command
 
             //     ->toArray();
 
-            $events = null;
-
-
             $calendars[] = [
                 'id' => $cid,
-                'freebusy' => $fb,
-                'events' => $events
+                'freebusy' => $fb
             ];
         }
         event(new EventsFetched($calendars));
