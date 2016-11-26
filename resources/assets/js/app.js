@@ -32,12 +32,6 @@ new Vue({
             cluster: 'eu',
             encrypted: true
         });
-    },
-
-    mounted() {
-        $('.js-marqueeMessage').marquee({
-            duration: 30000
-        });
     }
 });
 
