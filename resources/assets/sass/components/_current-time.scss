@@ -9,7 +9,7 @@
 }
 
 .current-time__time {
-    @include font-sans-light;
+    @include font-sans-bold;
 
     font-size: setting($font-size, l);
     letter-spacing: .05em;

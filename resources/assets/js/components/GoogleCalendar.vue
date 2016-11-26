@@ -1,25 +1,20 @@
 <template>
-    <grid :position="grid" modifiers="overflow padded blue">
+    <grid :position="grid" modifiers="overflow padded">
        <section class="google-calendar">
-           <h1>{{ calendarName }}</h1>
+           <h1 v-html="calendarName"></h1>
            <h2 v-if="occupied == true" class="google-calendar__status occupied"><i></i>Occupied</h2>
            <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available</h2>
            <ul class="google-calendar__events">
-              <li v-if="events.length == 0" class="google-calendar__event--error">
-                  <h2 class="google-calendar__event__title">No events found</h2>
+              <li v-if="events.length == 0" class="google-calendar__event">
+                  <h2 class="google-calendar__event__title">No bookings found</h2>
               </li>
-              <li v-for="event in events"  class="google-calendar__event">
+              <li v-else class="google-calendar__event">
+                <h2 class="google-calendar__event__title">Next bookings</h2>
+              </li>
+              <li v-for="(event, index) in events" class="google-calendar__event">
                 <div class="google-calendar__event__date">
                   {{ timeFormat(event.start, event.end) }}
-                  <!-- <span class="google-calendar__event__status" v-if="nowNext(event) == false">
-                    {{ nowNext(event, events) }}
-                  </span> -->
                 </div>
-                <h2 class="google-calendar__event__title">
-                  {{ event.summary }}
-                  <span  class="google-calendar__event__next"></span>
-                </h2>
-
               </li>
            </ul>
        </section>
@@ -49,23 +44,22 @@ export default {
             events: [],
             occupied: false,
             calendarMap: {
-              'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': 'Large Meeting Room',
-              'blue-leaf.co.uk_9ffftu2t7do5dhi2jdn61jpsho@group.calendar.google.com': 'Small Meeting Room',
-              'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': 'Little Little Meeting Room'
+                'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': '<span>Large</span> Meeting Room',
+                'blue-leaf.co.uk_9ffftu2t7do5dhi2jdn61jpsho@group.calendar.google.com': '<span>Small</span> Meeting Room',
+                'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': '<span>Little Little</span> Meeting Room'
             }
         };
     },
 
     computed: {
-      calendarName: function() {
-        return this.calendarMap[this.calendarId];
-      }
+        calendarName: function() {
+            return this.calendarMap[this.calendarId];
+        }
     },
 
     methods: {
         timeFormat,
         relativeTime,
-        // nowNext,
 
         getEventHandlers() {
             return {
@@ -76,7 +70,7 @@ export default {
                     });
 
                     if (calIndex > -1) {
-                      this.events = response.events[calIndex].events == null ? [] : response.events[calIndex].events;
+                      this.events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
                       this.occupied = false;
                       var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
                         var _now = moment();

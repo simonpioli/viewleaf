@@ -53,13 +53,24 @@ export function timeFormat(startString, endString) {
     return start.format('HH:mm') + ' - ' + end.format('HH:mm');
 }
 
-// export function nowNext(events, event) {
-//     console.log(events);
-//     const now = moment();
-//     var evStart = moment(event.start);
-//     var evEnd = moment(event.end);
+export function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
 
-
-
-//     return false;
-// }
+export function exitFullscreen() {
+  if(document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if(document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if(document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
