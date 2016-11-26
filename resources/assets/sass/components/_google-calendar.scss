@@ -1,3 +1,15 @@
+.google-calendar {
+    h1 {
+        font-size: 1.5vw;
+
+        span {
+            display: block;
+            @include font-sans-bold;
+            font-size: 2vw;
+        }
+    }
+}
+
 .google-calendar__events {
     color: color($blue, light);
 
@@ -10,8 +22,8 @@
     i {
         display: inline-block;
         margin: 0 0.5vw;
-        height: 1vw;
-        width: 1vw;
+        height: 1.5vw;
+        width: 1.5vw;
         border-radius: 50%;
     }
 
