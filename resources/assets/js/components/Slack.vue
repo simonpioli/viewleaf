@@ -5,7 +5,7 @@
             <p class="slack__meta">
                 Posted {{ relativeTime(posted) }} by {{ from }}
             </p>
-            <p class="slack__message">
+            <p class="slack__message js-marqueeMessage">
                 {{ message }}
             </p>
         </section>
@@ -34,8 +34,8 @@ export default {
 
     data() {
         return {
-            message: 'Loading Slack Messages...',
-            from: 'No-One Yet',
+            message: 'No recent announcements',
+            from: 'No-one',
             posted: 'A long time ago'
         }
     },
@@ -48,9 +48,15 @@ export default {
         getEventHandlers() {
             return {
                 'Slack.Announcement': response => {
-                    this.from = response.from;
-                    this.message = response.message;
-                    this.posted = moment(response.posted);
+                    if (response.message !== this.message) {
+                        $('.js-marqueeMessage').marquee('destroy');
+                        this.from = response.from;
+                        this.message = response.message.replace('<!channel>', '');
+                        this.posted = moment(response.posted);
+                        $('.js-marqueeMessage').marquee({
+                            duration: 30000
+                        });
+                    }
                 }
             }
         },

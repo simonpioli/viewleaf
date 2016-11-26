@@ -1,7 +1,7 @@
 <template>
-    <grid :position="grid" modifiers="overflow padded blue">
+    <grid :position="grid" modifiers="overflow padded grey">
        <section class="google-calendar">
-           <h1>{{ calendarName }}</h1>
+           <h1 v-html="rawHtml">{{ calendarName }}</h1>
            <h2 v-if="occupied == true" class="google-calendar__status occupied"><i></i>Occupied</h2>
            <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available</h2>
            <ul class="google-calendar__events">
@@ -44,9 +44,9 @@ export default {
             events: [],
             occupied: false,
             calendarMap: {
-              'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': 'Large Meeting Room',
-              'blue-leaf.co.uk_9ffftu2t7do5dhi2jdn61jpsho@group.calendar.google.com': 'Small Meeting Room',
-              'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': 'Little Little Meeting Room'
+              'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': '<span>Large</span> Meeting Room',
+              'blue-leaf.co.uk_9ffftu2t7do5dhi2jdn61jpsho@group.calendar.google.com': '<span>Small</span> Meeting Room',
+              'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': '<span>Little Little</span> Meeting Room'
             }
         };
     },

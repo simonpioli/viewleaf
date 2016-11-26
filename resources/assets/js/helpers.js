@@ -52,14 +52,3 @@ export function timeFormat(startString, endString) {
     }
     return start.format('HH:mm') + ' - ' + end.format('HH:mm');
 }
-
-// export function nowNext(events, event) {
-//     console.log(events);
-//     const now = moment();
-//     var evStart = moment(event.start);
-//     var evEnd = moment(event.end);
-
-
-
-//     return false;
-// }

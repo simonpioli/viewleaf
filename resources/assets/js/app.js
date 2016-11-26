@@ -3,6 +3,7 @@ import './bootstrap.js';
 import Echo from 'laravel-echo';
 import Vue from 'vue';
 import _ from 'lodash';
+require('../../../node_modules/jquery.marquee/jquery.marquee.js');
 
 import CurrentTime from './components/CurrentTime';
 import GoogleCalendar from './components/GoogleCalendar';
@@ -32,4 +33,11 @@ new Vue({
             encrypted: true
         });
     },
+
+    mounted() {
+        $('.js-marqueeMessage').marquee({
+            duration: 30000
+        });
+    }
 });
+
