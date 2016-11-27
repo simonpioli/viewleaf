@@ -23,6 +23,7 @@
         <sonos grid="g2:h2"></sonos>
 
         <slack grid="a4:h4"></slack>
+
     </div>
 
 @endsection
