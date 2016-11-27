@@ -73,7 +73,7 @@ export default {
                     this.artwork = '';
                     this.duration = '';
                     this.position = '';
-                    clearInterval(this.pollForTime);
+                    clearInterval(window.sonosInterval);
                     this.polling = false;
                 },
                 'Sonos.TrackIsPlaying': response => {
@@ -83,7 +83,7 @@ export default {
                     this.duration = response.trackInfo.duration;
                     this.position = response.trackInfo.position;
                     if (!this.polling) {
-                        setInterval(this.pollForTime, 5000);
+                        window.sonosInterval = setInterval(this.pollForTime, 5000);
                         this.polling = true;
                     }
                 },
