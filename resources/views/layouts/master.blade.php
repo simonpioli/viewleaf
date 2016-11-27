@@ -11,6 +11,11 @@
 
     @yield('content')
 
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
     <script src="{{ elixir("js/app.js") }}"></script>
 
 </body>

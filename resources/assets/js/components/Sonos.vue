@@ -44,7 +44,8 @@ export default {
             trackName: '',
             artwork: '',
             duration: '',
-            position: ''
+            position: '',
+            polling: false
         };
     },
 
@@ -55,6 +56,10 @@ export default {
         hasCover() {
             return !! this.artwork;
         },
+    },
+
+    mounted() {
+        this.pollForTime();
     },
 
     methods: {
@@ -68,6 +73,8 @@ export default {
                     this.artwork = '';
                     this.duration = '';
                     this.position = '';
+                    clearInterval(window.sonosInterval);
+                    this.polling = false;
                 },
                 'Sonos.TrackIsPlaying': response => {
                     this.artist = response.trackInfo.artist;
@@ -75,13 +82,26 @@ export default {
                     this.artwork = response.trackInfo.albumArt;
                     this.duration = response.trackInfo.duration;
                     this.position = response.trackInfo.position;
+                    if (!this.polling) {
+                        window.sonosInterval = setInterval(this.pollForTime, 5000);
+                        this.polling = true;
+                    }
                 },
             };
+        },
+
+        pollForTime() {
+            // poke the new endpoint for firing the checker every 5 seconds
+            this.$http.get('/api/dashboard/sonos').then(function(response, status, request) {
+                return true;
+            }, function() {
+                console.error('Sonos Request Failed: ' + status);
+            });
         },
 
         getSavedStateId() {
             return 'sonos';
         },
-    },
+    }
 };
 </script>
