@@ -4,6 +4,7 @@ import Echo from 'laravel-echo';
 import Vue from 'vue';
 import _ from 'lodash';
 require('../../../node_modules/jquery.marquee/jquery.marquee.js');
+import { launchIntoFullscreen, exitFullscreen } from './helpers';
 
 import CurrentTime from './components/CurrentTime';
 import GoogleCalendar from './components/GoogleCalendar';
@@ -31,6 +32,20 @@ new Vue({
             key: window.dashboard.pusherKey,
             cluster: 'eu',
             encrypted: true
+        });
+    },
+
+    mounted() {
+        $('.js-fullScreen').on('click', function(e) {
+            e.preventDefault();
+            if ($(this).is('.is-active')) {
+                exitFullscreen();
+                $(this).removeClass('is-active');
+            } else {
+                launchIntoFullscreen(document.getElementById('dashboard'));
+                $(this).addClass('is-active');
+            }
+
         });
     }
 });

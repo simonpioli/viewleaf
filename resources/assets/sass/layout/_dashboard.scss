@@ -9,6 +9,8 @@
     left: setting($grid, cell-spacing)/2;
     overflow: hidden;
 
+    background-color: color($gray, darkest);
+
     color: $white;
 
     font-size: setting($font-size, base);
