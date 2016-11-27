@@ -5,7 +5,6 @@ import Vue from 'vue';
 
 var VueResource = require('vue-resource');
 Vue.use(VueResource);
-// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('content');
 Vue.http.interceptors.push((request, next) => {
     request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
     next();
