@@ -81,7 +81,6 @@ export default {
 
     mounted: function() {
         if (this.from != 'No-one') {
-            console.log('Hit');
             $('.js-marqueeMessage').marquee({
                 duration: 30000
             });
