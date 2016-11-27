@@ -2,6 +2,14 @@ import './bootstrap.js';
 
 import Echo from 'laravel-echo';
 import Vue from 'vue';
+
+var VueResource = require('vue-resource');
+Vue.use(VueResource);
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+    next();
+});
+
 import _ from 'lodash';
 require('../../../node_modules/jquery.marquee/jquery.marquee.js');
 import { launchIntoFullscreen, exitFullscreen } from './helpers';
@@ -49,4 +57,3 @@ new Vue({
         });
     }
 });
-
