@@ -18,3 +18,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 */
+
+Route::get('/dashboard/sonos', function(Request $request) {
+    // Run the sonos command
+})->middleware('auth:api');

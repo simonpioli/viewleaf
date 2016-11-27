@@ -79,6 +79,10 @@ export default {
             };
         },
 
+        pollForTime() {
+            // poke the new endpoint for firing the checker every 5 seconds
+        },
+
         getSavedStateId() {
             return 'sonos';
         },
