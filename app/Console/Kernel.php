@@ -30,22 +30,22 @@ class Kernel extends ConsoleKernel
         $schedule->command('dashboard:sonos')
             // ->cron('*/5 * * * *')
             ->everyMinute()
-            ->weekdays()
+            // ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:calendar')
             ->everyFiveMinutes()
-            ->weekdays()
+            // ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:slack')
             ->everyFiveMinutes()
-            ->weekdays()
+            // ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:heartbeat')
             ->everyMinute()
-            ->weekdays()
+            // ->weekdays()
             ->between('7:00', '18:00');
 
         // $schedule->command('dashboard:rain')

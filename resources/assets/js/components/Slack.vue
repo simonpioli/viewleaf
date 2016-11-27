@@ -36,7 +36,13 @@ export default {
         return {
             message: 'No recent announcements',
             from: 'No-one',
-            posted: 'A long time ago'
+            posted: 'A long time ago',
+
+            default: {
+                message: 'No recent announcements',
+                from: 'No-one',
+                posted: 'A long time ago',
+            }
         }
     },
 
@@ -49,13 +55,20 @@ export default {
             return {
                 'Slack.Announcement': response => {
                     if (response.message !== this.message) {
-                        $('.js-marqueeMessage').marquee('destroy');
-                        this.from = response.from;
-                        this.message = response.message.replace('<!channel>', '');
-                        this.posted = moment(response.posted);
-                        $('.js-marqueeMessage').marquee({
-                            duration: 30000
-                        });
+                        if (moment(response.posted).isAfter(moment().subtract(7, 'days'))) {
+                            $('.js-marqueeMessage').marquee('destroy');
+                            this.from = response.from;
+                            this.message = response.message.replace('<!channel>', '');
+                            this.posted = moment(response.posted);
+                            $('.js-marqueeMessage').marquee({
+                                duration: 30000
+                            });
+                        } else {
+                            this.from = this.default.from;
+                            this.message = this.default.message;
+                            this.posted = this.default.posted;
+                            $('.js-marqueeMessage').marquee('destroy');
+                        }
                     }
                 }
             }
@@ -63,7 +76,16 @@ export default {
 
         getSavedStateId() {
             return 'slack';
-        },
+        }
+    },
+
+    mounted: function() {
+        if (this.from != 'No-one') {
+            console.log('Hit');
+            $('.js-marqueeMessage').marquee({
+                duration: 30000
+            });
+        }
     }
 
 }
