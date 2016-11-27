@@ -1,4 +1,4 @@
-import { forEach } from 'lodash';
+import { forEach, omit } from 'lodash';
 
 export default {
     watch: {
@@ -25,7 +25,12 @@ export default {
             forEach(savedState, (value, key) => this.$data[key] = value);
         },
         saveState() {
-            localStorage.setItem(this.getSavedStateId(), JSON.stringify(this.$data));
+            const exclusions = [
+                'polling'
+            ];
+
+            var toSave = omit(this.$data, exclusions);
+            localStorage.setItem(this.getSavedStateId(), JSON.stringify(toSave));
         },
         getSavedState() {
             let savedState = localStorage.getItem(this.getSavedStateId());
