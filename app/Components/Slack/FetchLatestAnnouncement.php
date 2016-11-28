@@ -32,25 +32,25 @@ class FetchLatestAnnouncement extends Command
     public function handle()
     {
         $channels = config('services.slack.channels');
-        $earliest = Carbon::now()->subDays(14)->startOfDay()->format('U');
+        $earliest = Carbon::now()->subDays(8)->startOfDay()->format('U');
         $messages = collect();
         foreach ($channels as $key => $channel) {
-            $history = SlackChannel::history($channel, 250, null, $earliest);
-            $message = $messages->push(collect($history->messages)
-                ->filter(function ($msg) {
-                    return !!stristr($msg->text, '<!channel>');
-                })
-                ->map(function ($msg) {
-                    return [
-                        'message' => $msg->text,
-                        'from' => property_exists($msg, 'user') ? SlackUser::info($msg->user)->user->real_name : '',
-                        'posted' => Carbon::createFromTimestamp($msg->ts)->toDateTimeString()
-                    ];
-                })
-                ->pop());
-
+            $history = SlackChannel::history($channel, 100, null, $earliest);
+            foreach ($history->messages as $key => $message) {
+                $messages->push($message);
+            }
         }
-        $messages->sortByDesc('posted');
+        $messages = $messages->filter(function ($message) {
+                return !!stristr($message->text, '<!channel>');
+            })
+            ->map(function ($message) {
+                return [
+                    'message' => $message->text,
+                    'from' => property_exists($message, 'user') ? SlackUser::info($message->user)->user->real_name : '',
+                    'posted' => Carbon::createFromTimestamp($message->ts)->toDateTimeString()
+                ];
+            });
+        $messages->sortBy('posted');
         event(new Announcement($messages->first()));
     }
 }
