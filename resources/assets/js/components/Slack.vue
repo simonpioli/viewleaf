@@ -53,23 +53,14 @@ export default {
                 'Slack.Announcement': response => {
                     if (response.message !== this.message) {
                         if (moment(response.posted).isAfter(moment().subtract(7, 'days'))) {
-                            $('.js-marqueeMessage').marquee('destroy');
                             this.from = response.from;
-
-                            // TODO: Replace with all these as well
-                            // !!stristr($message['text'], '<!channel>') ||
-                            // !!stristr($message['text'], '<!channel|@channel>') ||
-                            // !!stristr($message['text'], '<!here>') ||
-                            // !!stristr($message['text'], '<!here|@here>') ||
-                            // !!stristr($message['text'], '@bigscreen')) {
-
-                            this.message = response.message.replace('<!channel>', '');
-
-
+                            this.message = response.message
+                                .replace('<!channel>', '')
+                                .replace('<!channel|@channel>', '')
+                                .replace('<!here>', '')
+                                .replace('<!here|@here>', '')
+                                .replace('@bigscreen', '');
                             this.posted = moment(response.posted);
-                            $('.js-marqueeMessage').marquee({
-                                duration: 30000
-                            });
                         } else {
                             this.from = this.default.from;
                             this.message = this.default.message;
@@ -92,6 +83,15 @@ export default {
                 duration: 30000
             });
         }
+    },
+
+    updated: function() {
+        setTimeout(function(){
+            $('.js-marqueeMessage').marquee('destroy');
+            $('.js-marqueeMessage').marquee({
+                duration: 30000
+            });
+        }, 500);
     }
 
 }
