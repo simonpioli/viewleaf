@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Vluzrmos\SlackApi\Facades\SlackChannel;
 use Vluzrmos\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
+use App\Events\Slack\NoAnnouncement;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -61,6 +62,10 @@ class FetchLatestAnnouncement extends Command
                     'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });
-        event(new Announcement($messages->first()));
+        if ($messages->count() == 0) {
+            event(new NoAnnouncement());
+        } else {
+            event(new Announcement($messages->first()));
+        }
     }
 }

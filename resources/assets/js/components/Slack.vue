@@ -1,12 +1,12 @@
 <template>
     <grid :position="grid" modifiers="padded white overflow">
-        <section v-if="from != 'No-one'" class="slack">
+        <section v-if="message !== ''" class="slack">
             <h2 class="slack__header">Latest Announcement</h2>
             <p class="slack__message js-marqueeMessage">
                 {{ from }} said: <strong>{{ message }}</strong> {{ relativeTime(posted) }}
             </p>
         </section>
-        <section class="slack slack--offline" v-else>
+        <section v-else class="slack slack--offline">
             <h2 class="slack__header">Latest Announcement Unavailable</h2>
             <p class="slack__message">I couldn't find a relevant message to show.</p>
         </section>
@@ -32,14 +32,8 @@ export default {
     data() {
         return {
             message: '',
-            from: 'No-one',
-            posted: '',
-
-            default: {
-                message: '',
-                from: 'No-one',
-                posted: '',
-            }
+            from: '',
+            posted: ''
         }
     },
 
@@ -52,22 +46,21 @@ export default {
             return {
                 'Slack.Announcement': response => {
                     if (response.message !== this.message) {
-                        if (moment(response.posted).isAfter(moment().subtract(7, 'days'))) {
-                            this.from = response.from;
-                            this.message = response.message
-                                .replace('<!channel>', '')
-                                .replace('<!channel|@channel>', '')
-                                .replace('<!here>', '')
-                                .replace('<!here|@here>', '')
-                                .replace('@bigscreen', '');
-                            this.posted = moment(response.posted);
-                        } else {
-                            this.from = this.default.from;
-                            this.message = this.default.message;
-                            this.posted = this.default.posted;
-                            $('.js-marqueeMessage').marquee('destroy');
-                        }
+                        this.from = response.from;
+                        this.message = response.message
+                            .replace('<!channel>', '')
+                            .replace('<!channel|@channel>', '')
+                            .replace('<!here>', '')
+                            .replace('<!here|@here>', '')
+                            .replace('@bigscreen', '');
+                        this.posted = moment(response.posted);
                     }
+                },
+
+                'Slack.NoAnnouncement': response => {
+                    this.from = '';
+                    this.message = '';
+                    this.posted = '';
                 }
             }
         },
@@ -78,19 +71,26 @@ export default {
     },
 
     mounted: function() {
-        if (this.from != 'No-one') {
+        if (this.message != '') {
             $('.js-marqueeMessage').marquee({
                 duration: 30000
             });
         }
     },
 
+    beforeUpdate: function() {
+        $('.js-marqueeMessage').marquee('destroy');
+        console.log('Destroyed');
+    },
+
     updated: function() {
+        var _this = this;
         setTimeout(function(){
-            $('.js-marqueeMessage').marquee('destroy');
-            $('.js-marqueeMessage').marquee({
-                duration: 30000
-            });
+            if (_this.message != '') {
+                $('.js-marqueeMessage').marquee({
+                    duration: 30000
+                });
+            }
         }, 500);
     }
 
