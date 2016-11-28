@@ -1,16 +1,13 @@
 <template>
     <grid :position="grid" modifiers="padded white overflow">
-        <section v-if="message != ''" class="slack">
+        <section v-if="from != 'No-one'" class="slack">
             <h2 class="slack__header">Latest Announcement</h2>
-            <p class="slack__meta">
-                Posted {{ relativeTime(posted) }} by {{ from }}
-            </p>
             <p class="slack__message js-marqueeMessage">
-                {{ message }}
+                {{ from }} said: <strong>{{ message }}</strong> {{ relativeTime(posted) }}
             </p>
         </section>
-        <section class="slack--offline" v-else>
-            <h2 class="slack--header">Latest Announcement Unavailable</h2>
+        <section class="slack slack--offline" v-else>
+            <h2 class="slack__header">Latest Announcement Unavailable</h2>
             <p class="slack__message">I couldn't find a relevant message to show.</p>
         </section>
     </grid>
@@ -34,14 +31,14 @@ export default {
 
     data() {
         return {
-            message: 'No recent announcements',
+            message: '',
             from: 'No-one',
-            posted: 'A long time ago',
+            posted: '',
 
             default: {
-                message: 'No recent announcements',
+                message: '',
                 from: 'No-one',
-                posted: 'A long time ago',
+                posted: '',
             }
         }
     },
@@ -58,7 +55,17 @@ export default {
                         if (moment(response.posted).isAfter(moment().subtract(7, 'days'))) {
                             $('.js-marqueeMessage').marquee('destroy');
                             this.from = response.from;
+
+                            // TODO: Replace with all these as well
+                            // !!stristr($message['text'], '<!channel>') ||
+                            // !!stristr($message['text'], '<!channel|@channel>') ||
+                            // !!stristr($message['text'], '<!here>') ||
+                            // !!stristr($message['text'], '<!here|@here>') ||
+                            // !!stristr($message['text'], '@bigscreen')) {
+
                             this.message = response.message.replace('<!channel>', '');
+
+
                             this.posted = moment(response.posted);
                             $('.js-marqueeMessage').marquee({
                                 duration: 30000
