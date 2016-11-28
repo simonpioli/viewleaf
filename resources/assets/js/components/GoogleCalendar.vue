@@ -11,7 +11,7 @@
               <li v-else class="google-calendar__event">
                 <h2 class="google-calendar__event__title">Next bookings</h2>
               </li>
-              <li v-for="(event, index) in events" v-if="moment(event.end).isBefore()" class="google-calendar__event">
+              <li v-for="(event, index) in events" class="google-calendar__event">
                 <div class="google-calendar__event__date">
                   {{ timeFormat(event.start, event.end) }}
                 </div>
@@ -70,7 +70,11 @@ export default {
                     });
 
                     if (calIndex > -1) {
-                      this.events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
+                      var events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
+                      this.events = _.filter(events, function(o){
+                        var _now = moment();
+                        return !moment(o.end).isBefore(_now);
+                      });
                       this.occupied = false;
                       var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
                         var _now = moment();
