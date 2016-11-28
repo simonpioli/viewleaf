@@ -11,7 +11,7 @@
               <li v-else class="google-calendar__event">
                 <h2 class="google-calendar__event__title">Next bookings</h2>
               </li>
-              <li v-for="(event, index) in events" class="google-calendar__event">
+              <li v-for="(event, index) in events" v-if="moment(event.end).isBefore()" class="google-calendar__event">
                 <div class="google-calendar__event__date">
                   {{ timeFormat(event.start, event.end) }}
                 </div>
