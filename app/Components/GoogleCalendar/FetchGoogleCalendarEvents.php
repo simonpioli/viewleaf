@@ -52,9 +52,6 @@ class FetchGoogleCalendarEvents extends Command
             if (!empty($fbObject)) {
                 $fbCalendar = $fbObject[$cid]->getBusy();
                 $fb = collect($fbCalendar)
-                    ->reject(function(Google_Service_Calendar_TimePeriod $period) {
-                        return Carbon::parse($period->getStart()) < Carbon::now();
-                    })
                     ->map(function(Google_Service_Calendar_TimePeriod $period){
                         return [
                             'start' => $period->getStart(),

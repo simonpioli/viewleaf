@@ -70,7 +70,11 @@ export default {
                     });
 
                     if (calIndex > -1) {
-                      this.events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
+                      var events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
+                      this.events = _.filter(events, function(o){
+                        var _now = moment();
+                        return !moment(o.end).isBefore(_now);
+                      });
                       this.occupied = false;
                       var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
                         var _now = moment();
