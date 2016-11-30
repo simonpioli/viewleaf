@@ -11,10 +11,12 @@
     transition: opacity 0.5 ease-in;
 
     &:hover,
-    &:active,
+    &:active {
+        opacity: 1;
+    }
+
     &:focus {
         outline: none;
-        opacity: 1;
     }
 }
 

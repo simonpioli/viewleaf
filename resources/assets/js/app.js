@@ -48,12 +48,13 @@ new Vue({
             e.preventDefault();
             if ($(this).is('.is-active')) {
                 exitFullscreen();
-                $(this).removeClass('is-active');
             } else {
                 launchIntoFullscreen(document.getElementById('dashboard'));
-                $(this).addClass('is-active');
             }
+        });
 
+        $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', function(e){
+            $('.js-fullScreen').toggleClass('is-active');
         });
     }
 });
