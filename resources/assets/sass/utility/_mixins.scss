@@ -16,7 +16,7 @@
     background-repeat: no-repeat;
     // background-size: #{(100/setting($grid, cols))}vw;
     background-size: contain;
-    opacity: .2;
+    opacity: 0.5;
 }
 
 @mixin background-pattern($url) {
