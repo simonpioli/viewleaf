@@ -37,7 +37,7 @@ export default {
 
     computed: {
         formattedMessage: function() {
-            return this.from + ' said: “' + this.message + '” ' + relativeTime(this.posted);
+            return this.from + ' said: “' + this.message + '” ' + relativeTime(this.posted) + '.';
         }
     },
 
