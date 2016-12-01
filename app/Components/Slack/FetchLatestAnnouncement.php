@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Vluzrmos\SlackApi\Facades\SlackChannel;
 use Vluzrmos\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
+use App\Events\Slack\NoAnnouncement;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -36,21 +37,35 @@ class FetchLatestAnnouncement extends Command
         $messages = collect();
         foreach ($channels as $key => $channel) {
             $history = SlackChannel::history($channel, 100, null, $earliest);
-            foreach ($history->messages as $key => $message) {
+            $history = json_decode(json_encode($history), true);
+            foreach ($history['messages'] as $key => $message) {
                 $messages->push($message);
             }
         }
-        $messages = $messages->filter(function ($message) {
-                return !!stristr($message->text, '<!channel>');
+        $messages = $messages
+            ->filter(function ($message) {
+                $include = false;
+                if (!!stristr($message['text'], '<!channel>') ||
+                    !!stristr($message['text'], '<!channel|@channel>') ||
+                    !!stristr($message['text'], '<!here>') ||
+                    !!stristr($message['text'], '<!here|@here>') ||
+                    !!stristr($message['text'], '@bigscreen')) {
+                    $include = true;
+                }
+                return $include;
             })
+            ->sortByDesc('ts')
             ->map(function ($message) {
                 return [
-                    'message' => $message->text,
-                    'from' => property_exists($message, 'user') ? SlackUser::info($message->user)->user->real_name : '',
-                    'posted' => Carbon::createFromTimestamp($message->ts)->toDateTimeString()
+                    'message' => $message['text'],
+                    'from' => array_key_exists('user', $message) ? SlackUser::info($message['user'])->user->real_name : '',
+                    'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });
-        $messages->sortBy('posted');
-        event(new Announcement($messages->first()));
+        if ($messages->count() == 0) {
+            event(new NoAnnouncement());
+        } else {
+            event(new Announcement($messages->first()));
+        }
     }
 }

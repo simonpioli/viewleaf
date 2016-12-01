@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Components\Sonos\FetchCurrentTrack::class,
         \App\Components\Slack\FetchLatestAnnouncement::class,
         \App\Components\InternetConnectionStatus\SendHeartbeat::class,
+        \App\Components\Slack\ListChannels::class,
         // \App\Components\RainForecast\FetchRainForecast::class,
     ];
 
