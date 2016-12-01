@@ -11,7 +11,7 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 import _ from 'lodash';
-import { launchIntoFullscreen, exitFullscreen } from './helpers';
+import { launchIntoFullscreen, exitFullscreen, burnGuard } from './helpers';
 
 import CurrentTime from './components/CurrentTime';
 import GoogleCalendar from './components/GoogleCalendar';
@@ -55,5 +55,7 @@ new Vue({
         $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', function(e){
             $('.js-fullScreen').toggleClass('is-active');
         });
+
+        burnGuard();
     }
 });
