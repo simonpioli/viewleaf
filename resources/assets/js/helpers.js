@@ -39,7 +39,7 @@ export function relativeTime(value) {
         return date.format('DD/MM/YYYY HH:mm');
     }
 
-    return upperFirst(date.fromNow());
+    return date.fromNow();
 }
 
 export function timeFormat(startString, endString) {

@@ -11,7 +11,6 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 import _ from 'lodash';
-require('../../../node_modules/jquery.marquee/jquery.marquee.js');
 import { launchIntoFullscreen, exitFullscreen } from './helpers';
 
 import CurrentTime from './components/CurrentTime';
