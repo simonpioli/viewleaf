@@ -43,6 +43,9 @@ class FetchLatestAnnouncement extends Command
             }
         }
         $messages = $messages
+            ->reject(function ($message) {
+                array_key_exists('subtype', $message);
+            })
             ->filter(function ($message) {
                 $include = false;
                 if (!!stristr($message['text'], '<!channel>') ||
