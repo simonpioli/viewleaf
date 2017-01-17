@@ -83,7 +83,8 @@ export function burnGuard() {
       'position':'absolute',
       'top':'0px',
       'left':'0px',
-      'display':'none'
+      'display':'none',
+      'z-index':'9000'
   }).appendTo('body');
 
   var colors = ['#FF0000','#00FF00','#0000FF'], color = 0, delay = 1800000, scrollDelay = 1000;

@@ -40,7 +40,6 @@ export default {
 
     data() {
         return {
-            calendarName: '',
             events: [],
             occupied: false,
             calendarMap: {
