@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Emoji;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +20,17 @@ class DatabaseSeeder extends Seeder
             'email' => env('BASIC_AUTH_USERNAME'),
             'password' => bcrypt(env('BASIC_AUTH_PASSWORD')),
         ]);
+
+        // Segoe UI Emoji font...?
+        // http://getemoji.com/
+        //
+        Emoji::truncate();
+
+        Emoji::create([
+            'label' => '',
+            'symbol' => ''
+        ]);
+
+
     }
 }
