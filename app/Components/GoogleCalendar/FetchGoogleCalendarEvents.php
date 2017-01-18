@@ -43,19 +43,28 @@ class FetchGoogleCalendarEvents extends Command
     public function handle()
     {
         $config = config('laravel-google-calendar');
-
         $calendarIds = $config['calendars'];
+
+        $now = Carbon::now();
 
         foreach ($calendarIds as $key => $cid) {
             $fb = null;
             $fbObject = $this->calendar->busy(null, null, $cid)->getCalendars();
+            // $fbObject = $this->calendar->busy(new Carbon('2017-01-16 00:00:00'), null, $cid)->getCalendars();
             if (!empty($fbObject)) {
                 $fbCalendar = $fbObject[$cid]->getBusy();
                 $fb = collect($fbCalendar)
-                    ->map(function(Google_Service_Calendar_TimePeriod $period){
+                    ->map(function (Google_Service_Calendar_TimePeriod $period) use ($now) {
+                        $start = new Carbon($period->getStart());
+                        $end = new Carbon($period->getEnd());
+                        $current = false;
+                        if ($now->between($start, $end)) {
+                            $current = true;
+                        }
                         return [
-                            'start' => $period->getStart(),
-                            'end' => $period->getEnd()
+                            'start' => $start->toDateTimeString(),
+                            'end' => $end->toDateTimeString(),
+                            'current' => $current
                         ];
                     })->toArray();
             }
