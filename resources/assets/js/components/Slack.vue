@@ -41,8 +41,8 @@ export default {
         },
 
         animationTime: function() {
-            var cnt = this.formattedMessage.length;
-            var val = (cnt / 500) * 60;
+            var cnt = this.formattedMessage;
+            var val = (cnt.length / 500) * 60;
             val = val.toString() + 's';
             return val;
         }
@@ -52,6 +52,13 @@ export default {
         addClassModifiers,
         relativeDate,
         relativeTime,
+
+        // animationTime: function() {
+        //     var cnt = this.formattedMessage;
+        //     var val = (cnt.length / 500) * 60;
+        //     val = val.toString() + 's';
+        //     return val;
+        // },
 
         getEventHandlers() {
             return {
