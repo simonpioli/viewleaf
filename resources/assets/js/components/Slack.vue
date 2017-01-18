@@ -42,7 +42,7 @@ export default {
 
         animationTime: function() {
             var cnt = this.formattedMessage;
-            var val = (cnt.length / 520) * 60;
+            var val = (cnt.length / 600) * 60;
             val = val.toString() + 's';
             return val;
         }
