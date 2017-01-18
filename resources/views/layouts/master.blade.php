@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Laravel Dashboard v1.6.0</title>
+    <title>Laravel Dashboard v1.6.1</title>
     <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
     <link href="{{ elixir("css/app.css") }}" rel="stylesheet"/>
     <link href="{{ elixir("css/vendor.css") }}" rel="stylesheet"/>
