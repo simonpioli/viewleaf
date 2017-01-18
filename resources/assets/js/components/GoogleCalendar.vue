@@ -5,13 +5,13 @@
            <h2 v-if="occupied == true" class="google-calendar__status occupied"><i></i>Occupied</h2>
            <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available</h2>
            <ul class="google-calendar__events">
-              <li v-if="events.length == 0" class="google-calendar__event">
+              <li v-if="events.length == 0" class="google-calendar__event-heading">
                   <h2 class="google-calendar__event__title">No bookings found</h2>
               </li>
-              <li v-else class="google-calendar__event">
+              <li v-else class="google-calendar__event-heading">
                 <h2 class="google-calendar__event__title">Next bookings</h2>
               </li>
-              <li v-for="(event, index) in events" class="google-calendar__event">
+              <li v-for="(event, index) in events" class="google-calendar__event" v-bind:class="{ 'google-calendar__event--now': event.current }">
                 <div class="google-calendar__event__date">
                   {{ timeFormat(event.start, event.end) }}
                 </div>

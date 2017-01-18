@@ -2,7 +2,7 @@
     <grid :position="grid" modifiers="padded white overflow">
         <section v-if="message !== ''" class="slack">
             <h2 class="slack__header">Latest Announcement</h2>
-            <p class="slack__message marquee marquee-speed-drowsy" :data-marquee="formattedMessage"></p>
+            <p class="slack__message marquee marquee-movement-smooth" v-bind:style="{ animationDuration: animationTime }" :data-marquee="formattedMessage"></p>
         </section>
         <section v-else class="slack slack--offline">
             <h2 class="slack__header">Latest Announcement Unavailable</h2>
@@ -38,6 +38,13 @@ export default {
     computed: {
         formattedMessage: function() {
             return this.from + ' said: “' + this.message + '” ' + relativeTime(this.posted) + '.';
+        },
+
+        animationTime: function() {
+            var cnt = this.formattedMessage;
+            var val = (cnt.length / 600) * 60;
+            val = val.toString() + 's';
+            return val;
         }
     },
 
