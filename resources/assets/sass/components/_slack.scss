@@ -16,9 +16,8 @@
     font-size: 2.75vw;
     text-align: center;
 
-    &:before {
-        // animation-duration: attr(data-duration);
-        animation-duration: inherit;
+    &.slack__message::before {
+        animation-duration: inherit; // Uses the computed value from the style element to set the speed.
     }
 }
 
