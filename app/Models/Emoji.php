@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Emoji
+use Illuminate\Database\Eloquent\Model;
+
+class Emoji extends Model
 {
     /**
      * The attributes that are mass assignable.

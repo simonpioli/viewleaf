@@ -14,11 +14,19 @@
     overflow: hidden;
     margin: 0 0 0.5vw;
     font-size: 2.75vw;
+    line-height: 1;
     text-align: center;
 
-    &.slack__message::before {
-        animation-duration: inherit; // Uses the computed value from the style element to set the speed.
-    }
+    // &.slack__message::before {
+    //     animation-duration: inherit; // Uses the computed value from the style element to set the speed.
+    // }
+}
+
+.slack__avatar {
+    width: auto;
+    height: 2.75vw;
+    margin-right: 0.25em;
+    vertical-align: bottom;
 }
 
 .slack--offline {

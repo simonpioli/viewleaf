@@ -65,19 +65,31 @@ class FetchLatestAnnouncement extends Command
                 // using (SlackUser::method('info')) maybe if normal way doesn't work
                 // add to DB and str_replace message
 
-                $from = new SlackProfile;
-                $from->findByNickOrId($message['user']);
-                if (!$from->exists) {
+                $fromFind = SlackProfile::where('nick', $message['user'])->first();
+
+                if ($fromFind) {
+                    $from = $fromFind->get();
+                } else {
                     $retrieved = SlackUser::info($message['user']);
 
+                    $from = new SlackProfile;
                     $from->id = $retrieved->user->id;
                     $from->nick = $retrieved->user->name;
                     $from->real_name = $retrieved->user->profile->real_name;
                     $from->first_name = $retrieved->user->profile->first_name;
                     $from->last_name = $retrieved->user->profile->last_name;
-                    $from->thumbnail = $retrieved->user->profile->image_192;
+                    $from->thumbnail = $retrieved->user->profile->image_72;
                     $from->save();
                 }
+
+                dump($from);
+
+                $msg = $message['text'];
+                dump($msg); die();
+
+                // Looping through array of mentions
+                // <@U047SDGV1>
+                // $mention = SlackProfile::find($message['user'])->get();
 
                 return [
                     'message' => $message['text'],
