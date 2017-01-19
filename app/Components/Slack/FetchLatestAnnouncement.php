@@ -8,6 +8,7 @@ use Vluzrmos\SlackApi\Facades\SlackChannel;
 use Vluzrmos\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
 use App\Events\Slack\NoAnnouncement;
+use App\Models\SlackProfile;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -59,9 +60,28 @@ class FetchLatestAnnouncement extends Command
             })
             ->sortByDesc('ts')
             ->map(function ($message) {
+                // Check $message['text'] for mention pattern
+                // Search DB for ID and name, use or check with API
+                // using (SlackUser::method('info')) maybe if normal way doesn't work
+                // add to DB and str_replace message
+
+                $from = new SlackProfile;
+                $from->findByNickOrId($message['user']);
+                if (!$from->exists) {
+                    $retrieved = SlackUser::info($message['user']);
+
+                    $from->id = $retrieved->user->id;
+                    $from->nick = $retrieved->user->name;
+                    $from->real_name = $retrieved->user->profile->real_name;
+                    $from->first_name = $retrieved->user->profile->first_name;
+                    $from->last_name = $retrieved->user->profile->last_name;
+                    $from->thumbnail = $retrieved->user->profile->image_192;
+                    $from->save();
+                }
+
                 return [
                     'message' => $message['text'],
-                    'from' => array_key_exists('user', $message) ? SlackUser::info($message['user'])->user->real_name : '',
+                    'from' => $from,
                     'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });
