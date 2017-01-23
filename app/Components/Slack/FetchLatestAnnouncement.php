@@ -65,11 +65,8 @@ class FetchLatestAnnouncement extends Command
                 // using (SlackUser::method('info')) maybe if normal way doesn't work
                 // add to DB and str_replace message
 
-                $fromFind = SlackProfile::where('nick', $message['user'])->first();
-
-                if ($fromFind) {
-                    $from = $fromFind->get();
-                } else {
+                $from = SlackProfile::find($message['user']);
+                if (!$from) {
                     $retrieved = SlackUser::info($message['user']);
 
                     $from = new SlackProfile;
@@ -82,18 +79,36 @@ class FetchLatestAnnouncement extends Command
                     $from->save();
                 }
 
-                dump($from);
-
                 $msg = $message['text'];
-                dump($msg); die();
 
-                // Looping through array of mentions
-                // <@U047SDGV1>
-                // $mention = SlackProfile::find($message['user'])->get();
+                $mentionsRaw = [];
+
+                preg_match_all("/(<@)(U[A-Z0-9]{8})(>)/", $msg, $mentionsRaw);
+
+                $mentionsRaw = $mentionsRaw[2];
+                $mentions = collect();
+                foreach ($mentionsRaw as $key => $profileId) {
+                    $mention = SlackProfile::find($profileId);
+                    if (!$mention) {
+                        $retrieved = SlackUser::info($profileId);
+
+                        $mention = new SlackProfile;
+                        $mention->id = $retrieved->user->id;
+                        $mention->nick = $retrieved->user->name;
+                        $mention->real_name = $retrieved->user->profile->real_name;
+                        $mention->first_name = $retrieved->user->profile->first_name;
+                        $mention->last_name = $retrieved->user->profile->last_name;
+                        $mention->thumbnail = $retrieved->user->profile->image_72;
+                        $mention->save();
+                    }
+
+                    $mentions->push($mention->toArray());
+                }
 
                 return [
                     'message' => $message['text'],
                     'from' => $from,
+                    'mentions' => $mentions->all(),
                     'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });
