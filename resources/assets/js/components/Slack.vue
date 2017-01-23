@@ -35,6 +35,7 @@ export default {
     data() {
         return {
             message: '',
+            mentions: [],
             from: {},
             posted: ''
         }
@@ -63,13 +64,19 @@ export default {
                 'Slack.Announcement': response => {
                     if (response.message !== this.message) {
                         this.from = response.from;
-                        console.log(this.from);
+                        // console.log(this.from);
+                        this.mentions = response.mentions;
+                        console.log(this.mentions);
                         var message = response.message
                             .replace('<!channel>', '')
                             .replace('<!channel|@channel>', '')
                             .replace('<!here>', '')
                             .replace('<!here|@here>', '')
                             .replace('@bigscreen', '');
+
+                        // Loop array of mentions and replace the ID crap with the first name
+                        _.each();
+
                         this.message = message.trim();
                         this.posted = moment(response.posted);
                     }
