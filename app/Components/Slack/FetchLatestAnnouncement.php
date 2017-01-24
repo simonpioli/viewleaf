@@ -8,6 +8,7 @@ use Vluzrmos\SlackApi\Facades\SlackChannel;
 use Vluzrmos\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
 use App\Events\Slack\NoAnnouncement;
+use App\Models\SlackProfile;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -59,9 +60,54 @@ class FetchLatestAnnouncement extends Command
             })
             ->sortByDesc('ts')
             ->map(function ($message) {
+
+
+                $from = SlackProfile::find($message['user']);
+                if (!$from) {
+                    $retrieved = SlackUser::info($message['user']);
+
+                    $from = new SlackProfile;
+                    $from->id = $retrieved->user->id;
+                    $from->nick = $retrieved->user->name;
+                    $from->real_name = $retrieved->user->profile->real_name;
+                    $from->first_name = $retrieved->user->profile->first_name;
+                    $from->last_name = $retrieved->user->profile->last_name;
+                    $from->thumbnail = $retrieved->user->profile->image_72;
+                    $from->save();
+                }
+
+                $msg = $message['text'];
+
+                // Check $message['text'] for mention pattern
+                // Search DB for ID and name, use or check with API
+                // add to DB and str_replace message
+
+                $mentionsRaw = [];
+                preg_match_all("/(<@)(U[A-Z0-9]{8})(>)/", $msg, $mentionsRaw);
+                $mentionsRaw = $mentionsRaw[2];
+                $mentions = collect();
+                foreach ($mentionsRaw as $key => $profileId) {
+                    $mention = SlackProfile::find($profileId);
+                    if (!$mention) {
+                        $retrieved = SlackUser::info($profileId);
+
+                        $mention = new SlackProfile;
+                        $mention->id = $retrieved->user->id;
+                        $mention->nick = $retrieved->user->name;
+                        $mention->real_name = $retrieved->user->profile->real_name;
+                        $mention->first_name = $retrieved->user->profile->first_name;
+                        $mention->last_name = $retrieved->user->profile->last_name;
+                        $mention->thumbnail = $retrieved->user->profile->image_72;
+                        $mention->save();
+                    }
+
+                    $mentions->push($mention->toArray());
+                }
+
                 return [
                     'message' => $message['text'],
-                    'from' => array_key_exists('user', $message) ? SlackUser::info($message['user'])->user->real_name : '',
+                    'from' => $from,
+                    'mentions' => $mentions->all(),
                     'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });
