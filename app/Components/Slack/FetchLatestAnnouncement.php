@@ -60,10 +60,7 @@ class FetchLatestAnnouncement extends Command
             })
             ->sortByDesc('ts')
             ->map(function ($message) {
-                // Check $message['text'] for mention pattern
-                // Search DB for ID and name, use or check with API
-                // using (SlackUser::method('info')) maybe if normal way doesn't work
-                // add to DB and str_replace message
+
 
                 $from = SlackProfile::find($message['user']);
                 if (!$from) {
@@ -81,10 +78,12 @@ class FetchLatestAnnouncement extends Command
 
                 $msg = $message['text'];
 
+                // Check $message['text'] for mention pattern
+                // Search DB for ID and name, use or check with API
+                // add to DB and str_replace message
+
                 $mentionsRaw = [];
-
                 preg_match_all("/(<@)(U[A-Z0-9]{8})(>)/", $msg, $mentionsRaw);
-
                 $mentionsRaw = $mentionsRaw[2];
                 $mentions = collect();
                 foreach ($mentionsRaw as $key => $profileId) {

@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             message: '',
-            mentions: [],
+            mentions: {},
             from: {},
             posted: ''
         }
@@ -66,7 +66,6 @@ export default {
                         this.from = response.from;
                         // console.log(this.from);
                         this.mentions = response.mentions;
-                        console.log(this.mentions);
                         var message = response.message
                             .replace('<!channel>', '')
                             .replace('<!channel|@channel>', '')
@@ -75,7 +74,9 @@ export default {
                             .replace('@bigscreen', '');
 
                         // Loop array of mentions and replace the ID crap with the first name
-                        _.each();
+                        _.forEach(this.mentions, function(person) {
+                            message = message.replace('<@' + person.id + '>', person.first_name);
+                        });
 
                         this.message = message.trim();
                         this.posted = moment(response.posted);
