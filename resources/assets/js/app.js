@@ -17,7 +17,7 @@ import CurrentTime from './components/CurrentTime';
 import GoogleCalendar from './components/GoogleCalendar';
 import InternetConnection from './components/InternetConnection';
 import Sonos from './components/Sonos';
-import Slack from './components/Slack'
+import Slack from './components/Slack';
 // import RainForecast from './components/RainForecast';
 
 new Vue({
