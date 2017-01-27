@@ -31,19 +31,19 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('dashboard:heartbeat')
             ->everyMinute()
-            ->between('7:00', '18:00')
+            ->between('7:00', '18:00');
 
         $schedule->command('dashboard:sonos')
             ->everyMinute()
-            ->between('7:00', '18:00')
+            ->between('7:00', '18:00');
 
         $schedule->command('dashboard:calendar')
             ->everyFiveMinutes()
-            ->between('7:00', '18:00')
+            ->between('7:00', '18:00');
 
         $schedule->command('dashboard:slack')
             ->everyFiveMinutes()
-            ->between('7:00', '18:00')
+            ->between('7:00', '18:00');
 
         // $schedule->command('dashboard:rain')
         //     ->everyMinute()
