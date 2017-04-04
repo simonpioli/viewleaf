@@ -43,6 +43,7 @@ export default {
             events: [],
             occupied: false,
             calendarMap: {
+                'simon.pioli@blue-leaf.co.uk': '<span>Test</span> Calendar',
                 'blue-leaf.co.uk_l7sd9lk6skljfprvub3q5g9qjs@group.calendar.google.com': '<span>Large</span> Meeting Room',
                 'blue-leaf.co.uk_9ffftu2t7do5dhi2jdn61jpsho@group.calendar.google.com': '<span>Small</span> Meeting Room',
                 'blue-leaf.co.uk_prupcvqhi5f0kq2ev70gk2jqt4@group.calendar.google.com': '<span>Little Little</span> Meeting Room'
