@@ -42,8 +42,9 @@ class FetchGoogleCalendarEvents extends Command
      */
     public function handle()
     {
-        $config = config('laravel-google-calendar');
-        $calendarIds = $config['calendars'];
+        $appConfig = config('app');
+        $calConfig = config('laravel-google-calendar');
+        $calendarIds = $calConfig['calendars'];
 
         $now = Carbon::now();
 
@@ -54,9 +55,11 @@ class FetchGoogleCalendarEvents extends Command
             if (!empty($fbObject)) {
                 $fbCalendar = $fbObject[$cid]->getBusy();
                 $fb = collect($fbCalendar)
-                    ->map(function (Google_Service_Calendar_TimePeriod $period) use ($now) {
+                    ->map(function (Google_Service_Calendar_TimePeriod $period) use ($now, $appConfig) {
                         $start = new Carbon($period->getStart());
+                        $start->setTimezone($appConfig['timezone']);
                         $end = new Carbon($period->getEnd());
+                        $end->setTimezone($appConfig['timezone']);
                         $current = false;
                         if ($now->between($start, $end)) {
                             $current = true;
