@@ -24,7 +24,7 @@ class FetchLatestAnnouncement extends Command
      *
      * @var string
      */
-    protected $description = 'Fetch the latest announcement (ie a post with @channel in the #bl-tannoy or #bl-cheshire channels).';
+    protected $description = 'Fetch the latest announcement (ie a post with @channel or @bigscreen in the #bl-tannoy or #bl-cheshire channels).';
 
     /**
      * Execute the console command.
@@ -34,7 +34,7 @@ class FetchLatestAnnouncement extends Command
     public function handle()
     {
         $channels = config('services.slack.channels');
-        $earliest = Carbon::now()->subDays(8)->startOfDay()->format('U');
+        $earliest = Carbon::now()->subDays(3)->startOfDay()->format('U');
         $messages = collect();
         foreach ($channels as $key => $channel) {
             $history = SlackChannel::history($channel, 100, null, $earliest);
@@ -51,8 +51,6 @@ class FetchLatestAnnouncement extends Command
                 $include = false;
                 if (!!stristr($message['text'], '<!channel>') ||
                     !!stristr($message['text'], '<!channel|@channel>') ||
-                    !!stristr($message['text'], '<!here>') ||
-                    !!stristr($message['text'], '<!here|@here>') ||
                     !!stristr($message['text'], '@bigscreen')) {
                     $include = true;
                 }
