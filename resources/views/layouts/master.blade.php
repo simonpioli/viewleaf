@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Viewleaf Dashboard v1.7.4</title>
+    <title>Viewleaf Dashboard v1.7.5</title>
     <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
     <link href="{{ elixir("css/app.css") }}" rel="stylesheet"/>
     <meta name="google" value="notranslate">
