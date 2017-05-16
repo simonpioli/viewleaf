@@ -52,6 +52,8 @@ export default {
                 message = message.replace('<@' + person.id + '>', avatar + ' (' + person.first_name + ')');
             });
 
+            // This might be the one for the Unicode characters - https://aaronparecki.com/2017/02/05/8/day-47-slack-emoji
+
             _.forEach(this.emoji, function(item) {
                 // emojiElem = createElement(Emoji, item);  // Need to work out how to actually do this...
                 let emoji = '<img class="slack__emoji" src="' + item.image + '">';
