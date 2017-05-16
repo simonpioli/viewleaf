@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         \App\Components\InternetConnectionStatus\SendHeartbeat::class,
         \App\Components\Slack\ListChannels::class,
         \App\Components\Slack\ListUsers::class,
+        \App\Components\Slack\ListEmoji::class,
         // \App\Components\RainForecast\FetchRainForecast::class,
     ];
 
