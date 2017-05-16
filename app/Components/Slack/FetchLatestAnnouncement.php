@@ -9,6 +9,7 @@ use Vluzrmos\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
 use App\Events\Slack\NoAnnouncement;
 use App\Models\SlackProfile;
+use App\Models\Emoji;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -102,10 +103,26 @@ class FetchLatestAnnouncement extends Command
                     $mentions->push($mention->toArray());
                 }
 
+                dump($msg);
+
+                $emojiRaw = [];
+                preg_match_all("/:([a-z_]+):/", $msg, $emojiRaw);
+                $emojiRaw = $emojiRaw[1];
+                $emoji = collect();
+                foreach ($emojiRaw as $key => $label) {
+                    $result = Emoji::where('label', '=', $label)->first();
+                    if (!empty($emoji->image) && strstr($emoji->image, 'alias')) {
+                        $newSearch = explode(':', $emoji->image);
+                        $result = Emoji::where('label', '=', $newSearch[1])->first();
+                    }
+                    $emoji->push($result->toArray());
+                }
+
                 return [
-                    'message' => $message['text'],
+                    'message' => $msg,
                     'from' => $from,
                     'mentions' => $mentions->all(),
+                    'emoji' => $emoji->all(),
                     'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });

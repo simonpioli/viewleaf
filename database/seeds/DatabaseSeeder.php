@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $emoji = slack()->get('emoji.list');
 
-        foreach ($emoji['emoji'] as $name => $path) {
+        foreach ($emoji->emoji as $name => $path) {
             Emoji::create([
                 'label' => $name,
                 'image' => $path
