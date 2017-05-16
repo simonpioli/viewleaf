@@ -109,12 +109,18 @@ class FetchLatestAnnouncement extends Command
                 $emoji = collect();
                 foreach ($emojiRaw as $key => $label) {
                     $result = Emoji::where('label', '=', $label)->first();
-                    if (!empty($emoji->image) && strstr($emoji->image, 'alias')) {
-                        $newSearch = explode(':', $emoji->image);
-                        $result = Emoji::where('label', '=', $newSearch[1])->first();
-                    }
                     if (!empty($result)) {
-                        $emoji->push($result->toArray());
+                        $result = $result->toArray();
+                        if (!empty($result['image']) && strstr($result['image'], 'alias')) {
+                            $newSearch = explode(':', $result['image']);
+                            $result = Emoji::where('label', '=', $newSearch[1])->first();
+                            if (!empty($result)) {
+                                $result = $result->toArray();
+                                $result['label'] = $label;
+                            }
+                        }
+
+                        $emoji->push($result);
                     }
                 }
 

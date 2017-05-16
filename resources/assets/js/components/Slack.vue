@@ -49,13 +49,13 @@ export default {
             _.forEach(this.mentions, function(person) {
                 // avatar = createElement(Avatar, person); // Need to work out how to actually do this...
                 let avatar = '<img class="slack__avatar--mention" src="' + person.thumbnail + '">';
-                message = message.replace('<@' + person.id + '>', avatar + ' ' + person.first_name);
+                message = message.replace('<@' + person.id + '>', avatar + ' (' + person.first_name + ')');
             });
 
             _.forEach(this.emoji, function(item) {
                 // emojiElem = createElement(Emoji, item);  // Need to work out how to actually do this...
-                let emoji = '<img src="' + item.image + '">';
-                message = message.replace(':' + item.label + ':', emojiElem);
+                let emoji = '<img class="slack__emoji" src="' + item.image + '">';
+                message = message.replace(':' + item.label + ':', emoji);
             });
 
             console.log(message);
