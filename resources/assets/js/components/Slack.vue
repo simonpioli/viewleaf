@@ -4,7 +4,7 @@
             <h2 class="slack__header">Latest Announcement</h2>
             <p class="slack__message marquee marquee-movement-smooth" v-bind:style="{ animationDuration: animationTime }">
                 <avatar :profile="from"></avatar>
-                {{ formattedMessage }}
+                <message :message="message" :emoji="emoji" :mentions="mentions" :from="from"></message>
             </p>
         </section>
         <section v-else class="slack slack--offline">
@@ -16,8 +16,9 @@
 <script>
 import Echo from '../mixins/echo';
 import Grid from './Grid';
-import Avatar from './Avatar';
-import { addClassModifiers, relativeDate, relativeTime } from '../helpers';
+import Avatar from './slack/Avatar';
+import Message from './slack/Message';
+import { addClassModifiers } from '../helpers';
 import SaveState from '../mixins/save-state';
 import moment from 'moment';
 
@@ -25,7 +26,8 @@ export default {
 
     components: {
         Grid,
-        Avatar
+        Avatar,
+        Message
     },
 
     mixins: [Echo, SaveState],
@@ -36,18 +38,15 @@ export default {
         return {
             message: '',
             mentions: {},
+            emoji: {},
             from: {},
             posted: ''
         }
     },
 
     computed: {
-        formattedMessage: function() {
-            return this.from.real_name + ' said: “' + this.message + '” ' + relativeTime(this.posted) + '.';
-        },
-
         animationTime: function() {
-            var cnt = this.formattedMessage;
+            var cnt = this.message;
             var val = (cnt.length / 600) * 60;
             val = val.toString() + 's';
             return val;
@@ -56,8 +55,6 @@ export default {
 
     methods: {
         addClassModifiers,
-        relativeDate,
-        relativeTime,
 
         getEventHandlers() {
             return {
@@ -69,14 +66,7 @@ export default {
                         var message = response.message
                             .replace('<!channel>', '')
                             .replace('<!channel|@channel>', '')
-                            .replace('<!here>', '')
-                            .replace('<!here|@here>', '')
                             .replace('@bigscreen', '');
-
-                        // Loop array of mentions and replace the ID crap with the first name
-                        _.forEach(this.mentions, function(person) {
-                            message = message.replace('<@' + person.id + '>', person.first_name);
-                        });
 
                         this.message = message.trim();
                         this.posted = moment(response.posted);
