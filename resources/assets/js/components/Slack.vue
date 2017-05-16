@@ -4,7 +4,7 @@
             <h2 class="slack__header">Latest Announcement</h2>
             <p class="slack__message marquee marquee-movement-smooth" v-bind:style="{ animationDuration: animationTime }">
                 <avatar :profile="from"></avatar>
-                <message :message="message" :emoji="emoji" :mentions="mentions" :from="from"></message>
+                <span v-html="formattedMessage">{{ formattedMessage }}</span>
             </p>
         </section>
         <section v-else class="slack slack--offline">
@@ -17,8 +17,7 @@
 import Echo from '../mixins/echo';
 import Grid from './Grid';
 import Avatar from './slack/Avatar';
-import Message from './slack/Message';
-import { addClassModifiers } from '../helpers';
+import { addClassModifiers, relativeDate, relativeTime } from '../helpers';
 import SaveState from '../mixins/save-state';
 import moment from 'moment';
 
@@ -26,8 +25,7 @@ export default {
 
     components: {
         Grid,
-        Avatar,
-        Message
+        Avatar
     },
 
     mixins: [Echo, SaveState],
@@ -45,6 +43,26 @@ export default {
     },
 
     computed: {
+        formattedMessage: function() {
+            var message = this.from.real_name + ' said: “' + this.message + '” ' + relativeTime(this.posted) + '.';
+            // Loop array of mentions and replace the ID crap with the first name
+            _.forEach(this.mentions, function(person) {
+                // avatar = createElement(Avatar, person); // Need to work out how to actually do this...
+                let avatar = '<img class="slack__avatar--mention" src="' + person.thumbnail + '">';
+                message = message.replace('<@' + person.id + '>', avatar + ' ' + person.first_name);
+            });
+
+            _.forEach(this.emoji, function(item) {
+                // emojiElem = createElement(Emoji, item);  // Need to work out how to actually do this...
+                let emoji = '<img src="' + item.image + '">';
+                message = message.replace(':' + item.label + ':', emojiElem);
+            });
+
+            console.log(message);
+
+            return message;
+        },
+
         animationTime: function() {
             var cnt = this.message;
             var val = (cnt.length / 600) * 60;
@@ -55,6 +73,8 @@ export default {
 
     methods: {
         addClassModifiers,
+        relativeDate,
+        relativeTime,
 
         getEventHandlers() {
             return {
@@ -63,6 +83,7 @@ export default {
                         this.from = response.from;
                         // console.log(this.from);
                         this.mentions = response.mentions;
+                        this.emoji = response.emoji;
                         var message = response.message
                             .replace('<!channel>', '')
                             .replace('<!channel|@channel>', '')

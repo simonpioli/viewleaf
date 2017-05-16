@@ -107,7 +107,6 @@ class FetchLatestAnnouncement extends Command
                 preg_match_all("/:([a-z_]+):/", $msg, $emojiRaw);
                 $emojiRaw = $emojiRaw[1];
                 $emoji = collect();
-                dump($emojiRaw);
                 foreach ($emojiRaw as $key => $label) {
                     $result = Emoji::where('label', '=', $label)->first();
                     if (!empty($emoji->image) && strstr($emoji->image, 'alias')) {
@@ -118,8 +117,6 @@ class FetchLatestAnnouncement extends Command
                         $emoji->push($result->toArray());
                     }
                 }
-
-                dump($emoji);
 
                 return [
                     'message' => $msg,

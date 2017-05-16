@@ -9,6 +9,7 @@ class Announcement extends DashboardEvent
     public $from;
     public $posted;
     public $message;
+    public $emoji;
     public $mentions;
 
     public function __construct(array $message)
