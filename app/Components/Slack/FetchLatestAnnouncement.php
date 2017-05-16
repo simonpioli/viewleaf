@@ -103,20 +103,23 @@ class FetchLatestAnnouncement extends Command
                     $mentions->push($mention->toArray());
                 }
 
-                dump($msg);
-
                 $emojiRaw = [];
                 preg_match_all("/:([a-z_]+):/", $msg, $emojiRaw);
                 $emojiRaw = $emojiRaw[1];
                 $emoji = collect();
+                dump($emojiRaw);
                 foreach ($emojiRaw as $key => $label) {
                     $result = Emoji::where('label', '=', $label)->first();
                     if (!empty($emoji->image) && strstr($emoji->image, 'alias')) {
                         $newSearch = explode(':', $emoji->image);
                         $result = Emoji::where('label', '=', $newSearch[1])->first();
                     }
-                    $emoji->push($result->toArray());
+                    if (!empty($result)) {
+                        $emoji->push($result->toArray());
+                    }
                 }
+
+                dump($emoji);
 
                 return [
                     'message' => $msg,
