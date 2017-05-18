@@ -20,6 +20,7 @@ import Avatar from './slack/Avatar';
 import { addClassModifiers, relativeDate, relativeTime } from '../helpers';
 import SaveState from '../mixins/save-state';
 import moment from 'moment';
+import punycode from 'punycode';
 
 export default {
 
@@ -52,15 +53,20 @@ export default {
                 message = message.replace('<@' + person.id + '>', avatar + ' (' + person.first_name + ')');
             });
 
-            // This might be the one for the Unicode characters - https://aaronparecki.com/2017/02/05/8/day-47-slack-emoji
-
             _.forEach(this.emoji, function(item) {
-                // emojiElem = createElement(Emoji, item);  // Need to work out how to actually do this...
-                let emoji = '<img class="slack__emoji" src="' + item.image + '">';
-                message = message.replace(':' + item.label + ':', emoji);
-            });
+                var emoji = null;
 
-            console.log(message);
+                if (item.image != null) {
+                    emoji = '<img class="slack__emoji" src="' + item.image + '">';
+                } else {
+                    var points = item.symbol.split("-");
+                    points = points.map(function(p){ return parseInt(p, 16) });
+                    emoji = punycode.ucs2.encode(points);
+                }
+                if (emoji !== null) {
+                    message = message.replace(':' + item.label + ':', emoji);
+                }
+            });
 
             return message;
         },

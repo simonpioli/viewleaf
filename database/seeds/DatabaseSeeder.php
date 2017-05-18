@@ -26,9 +26,18 @@ class DatabaseSeeder extends Seeder
         //
         Emoji::truncate();
 
-        $emoji = slack()->get('emoji.list');
+        $emoji = json_decode(file_get_contents(base_path().'/database/seeds/emoji_pretty.json'));
 
-        foreach ($emoji->emoji as $name => $path) {
+        foreach ($emoji as $key => $item) {
+            Emoji::create([
+                'label' => $item->short_name,
+                'symbol' => $item->unified
+            ]);
+        }
+
+        $customEmoji = slack()->get('emoji.list');
+
+        foreach ($customEmoji->emoji as $name => $path) {
             Emoji::create([
                 'label' => $name,
                 'image' => $path
