@@ -2,8 +2,8 @@
     <grid :position="grid" modifiers="overflow padded">
        <section class="google-calendar">
            <h1 v-html="calendarName"></h1>
-           <h2 v-if="occupied == true" class="google-calendar__status occupied"><i></i>Occupied</h2>
-           <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available</h2>
+           <h2 v-if="occupied == true" class="google-calendar__status occupied"><i></i>Occupied {{ nextSignificantTime }}</h2>
+           <h2 v-if="occupied == false" class="google-calendar__status available"><i></i>Available {{ nextSignificantTime }}</h2>
            <ul class="google-calendar__events">
               <li v-if="events.length == 0" class="google-calendar__event-heading">
                   <h2 class="google-calendar__event__title">No bookings found</h2>
@@ -54,6 +54,16 @@ export default {
     computed: {
         calendarName: function() {
             return this.calendarMap[this.calendarId];
+        },
+        nextSignificantTime: function() {
+            var evt = _.first(this.events);
+            if (typeof(evt) !== 'undefined') {
+              var str = 'until ';
+              str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start)
+              return str;
+            } else {
+              return '';
+            }
         }
     },
 
