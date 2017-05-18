@@ -30,6 +30,13 @@
     line-height: 1.5;
 }
 
+.slack__emoji,
+.slack__avatar--mention {
+    @extend .slack__avatar;
+    height: 1em;
+    margin-right: 0;
+}
+
 .slack--offline {
     .slack__header,
     .slack__message {
