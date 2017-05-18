@@ -104,10 +104,9 @@ class FetchLatestAnnouncement extends Command
                 }
 
                 $emojiRaw = [];
-                preg_match_all("/:([a-z_]+):/", $msg, $emojiRaw);
-                $emojiRaw = $emojiRaw[1];
+                preg_match_all("/\:([a-zA-Z0-9\-_\+]+)\:(?:\:([a-zA-Z0-9\-_\+]+)\:)?/", $msg, $emojiRaw);
                 $emoji = collect();
-                foreach ($emojiRaw as $key => $label) {
+                foreach ($emojiRaw[1] as $key => $label) {
                     $result = Emoji::where('label', '=', $label)->first();
                     if (!empty($result)) {
                         $result = $result->toArray();
@@ -117,6 +116,15 @@ class FetchLatestAnnouncement extends Command
                             if (!empty($result)) {
                                 $result = $result->toArray();
                                 $result['label'] = $label;
+                            }
+                        }
+                        $result['skin'] = false;
+                        if (isset($emojiRaw[2][$key]) && $emojiRaw[2][$key] != "") {
+                            $skin = $emojiRaw[2][$key];
+                            $skinResult = Emoji::where('label', '=', $skin)->first();
+                            if (!empty($skinResult)) {
+                                $result['symbol'] .= '-' . $skinResult->toArray()['symbol'];
+                                $result['skin'] = $skinResult->toArray()['label'];
                             }
                         }
 

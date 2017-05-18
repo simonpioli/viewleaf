@@ -64,7 +64,11 @@ export default {
                     emoji = punycode.ucs2.encode(points);
                 }
                 if (emoji !== null) {
-                    message = message.replace(':' + item.label + ':', emoji);
+                    if (item.skin) {
+                        message = message.replace(':' + item.label + '::' + item.skin + ':', emoji);
+                    } else {
+                        message = message.replace(':' + item.label + ':', emoji);
+                    }
                 }
             });
 
