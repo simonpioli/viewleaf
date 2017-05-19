@@ -9,6 +9,7 @@ use Vluzrmos\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
 use App\Events\Slack\NoAnnouncement;
 use App\Models\SlackProfile;
+use App\Models\Emoji;
 
 class FetchLatestAnnouncement extends Command
 {
@@ -102,10 +103,40 @@ class FetchLatestAnnouncement extends Command
                     $mentions->push($mention->toArray());
                 }
 
+                $emojiRaw = [];
+                preg_match_all("/\:([a-zA-Z0-9\-_\+]+)\:(?:\:([a-zA-Z0-9\-_\+]+)\:)?/", $msg, $emojiRaw);
+                $emoji = collect();
+                foreach ($emojiRaw[1] as $key => $label) {
+                    $result = Emoji::where('label', '=', $label)->first();
+                    if (!empty($result)) {
+                        $result = $result->toArray();
+                        if (!empty($result['image']) && strstr($result['image'], 'alias')) {
+                            $newSearch = explode(':', $result['image']);
+                            $result = Emoji::where('label', '=', $newSearch[1])->first();
+                            if (!empty($result)) {
+                                $result = $result->toArray();
+                                $result['label'] = $label;
+                            }
+                        }
+                        $result['skin'] = false;
+                        if (isset($emojiRaw[2][$key]) && $emojiRaw[2][$key] != "") {
+                            $skin = $emojiRaw[2][$key];
+                            $skinResult = Emoji::where('label', '=', $skin)->first();
+                            if (!empty($skinResult)) {
+                                $result['symbol'] .= '-' . $skinResult->toArray()['symbol'];
+                                $result['skin'] = $skinResult->toArray()['label'];
+                            }
+                        }
+
+                        $emoji->push($result);
+                    }
+                }
+
                 return [
-                    'message' => $message['text'],
+                    'message' => $msg,
                     'from' => $from,
                     'mentions' => $mentions->all(),
+                    'emoji' => $emoji->all(),
                     'posted' => Carbon::createFromTimestamp($message['ts'])->toDateTimeString()
                 ];
             });

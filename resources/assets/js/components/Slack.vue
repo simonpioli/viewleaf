@@ -4,7 +4,7 @@
             <h2 class="slack__header">Latest Announcement</h2>
             <p class="slack__message marquee marquee-movement-smooth" v-bind:style="{ animationDuration: animationTime }">
                 <avatar :profile="from"></avatar>
-                {{ formattedMessage }}
+                <span v-html="formattedMessage">{{ formattedMessage }}</span>
             </p>
         </section>
         <section v-else class="slack slack--offline">
@@ -16,10 +16,11 @@
 <script>
 import Echo from '../mixins/echo';
 import Grid from './Grid';
-import Avatar from './Avatar';
+import Avatar from './slack/Avatar';
 import { addClassModifiers, relativeDate, relativeTime } from '../helpers';
 import SaveState from '../mixins/save-state';
 import moment from 'moment';
+import punycode from 'punycode';
 
 export default {
 
@@ -36,6 +37,7 @@ export default {
         return {
             message: '',
             mentions: {},
+            emoji: {},
             from: {},
             posted: ''
         }
@@ -43,11 +45,38 @@ export default {
 
     computed: {
         formattedMessage: function() {
-            return this.from.real_name + ' said: “' + this.message + '” ' + relativeTime(this.posted) + '.';
+            var message = this.from.real_name + ' said: “' + this.message + '” ' + relativeTime(this.posted) + '.';
+            // Loop array of mentions and replace the ID crap with the first name
+            _.forEach(this.mentions, function(person) {
+                // avatar = createElement(Avatar, person); // Need to work out how to actually do this...
+                let avatar = '<img class="slack__avatar--mention" src="' + person.thumbnail + '">';
+                message = message.replace('<@' + person.id + '>', avatar + ' (' + person.first_name + ')');
+            });
+
+            _.forEach(this.emoji, function(item) {
+                var emoji = null;
+
+                if (item.image != null) {
+                    emoji = '<img class="slack__emoji" src="' + item.image + '">';
+                } else {
+                    var points = item.symbol.split("-");
+                    points = points.map(function(p){ return parseInt(p, 16) });
+                    emoji = punycode.ucs2.encode(points);
+                }
+                if (emoji !== null) {
+                    if (item.skin) {
+                        message = message.replace(':' + item.label + '::' + item.skin + ':', emoji);
+                    } else {
+                        message = message.replace(':' + item.label + ':', emoji);
+                    }
+                }
+            });
+
+            return message;
         },
 
         animationTime: function() {
-            var cnt = this.formattedMessage;
+            var cnt = this.message;
             var val = (cnt.length / 600) * 60;
             val = val.toString() + 's';
             return val;
@@ -66,17 +95,11 @@ export default {
                         this.from = response.from;
                         // console.log(this.from);
                         this.mentions = response.mentions;
+                        this.emoji = response.emoji;
                         var message = response.message
                             .replace('<!channel>', '')
                             .replace('<!channel|@channel>', '')
-                            .replace('<!here>', '')
-                            .replace('<!here|@here>', '')
                             .replace('@bigscreen', '');
-
-                        // Loop array of mentions and replace the ID crap with the first name
-                        _.forEach(this.mentions, function(person) {
-                            message = message.replace('<@' + person.id + '>', person.first_name);
-                        });
 
                         this.message = message.trim();
                         this.posted = moment(response.posted);
