@@ -24,13 +24,24 @@ class DatabaseSeeder extends Seeder
         // Segoe UI Emoji font...?
         // http://getemoji.com/
         //
-        // Emoji::truncate();
+        Emoji::truncate();
 
-        // Emoji::create([
-        //     'label' => '',
-        //     'symbol' => ''
-        // ]);
+        $emoji = json_decode(file_get_contents(base_path().'/database/seeds/emoji_pretty.json'));
 
+        foreach ($emoji as $key => $item) {
+            Emoji::create([
+                'label' => $item->short_name,
+                'symbol' => $item->unified
+            ]);
+        }
 
+        $customEmoji = slack()->get('emoji.list');
+
+        foreach ($customEmoji->emoji as $name => $path) {
+            Emoji::create([
+                'label' => $name,
+                'image' => $path
+            ]);
+        }
     }
 }

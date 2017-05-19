@@ -13,7 +13,8 @@ class Emoji extends Model
      */
     protected $fillable = [
         'label',
-        'symbol'
+        'symbol',
+        'image'
     ];
 
     /**
@@ -22,4 +23,6 @@ class Emoji extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public $timestamps = false;
 }
