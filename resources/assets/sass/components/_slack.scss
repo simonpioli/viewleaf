@@ -1,0 +1,46 @@
+.slack {
+
+}
+
+.slack__header {
+    margin: 0 0 1.5vw;
+    font-size: 2.5vw;
+    text-align: center;
+    text-transform: uppercase;
+    color: #37122E;
+}
+
+.slack__message {
+    overflow: hidden;
+    margin: 0 0 0.5vw;
+    font-size: 2.75vw;
+    line-height: 1.5;
+    text-align: center;
+
+    // &.slack__message::before {
+    //     animation-duration: inherit; // Uses the computed value from the style element to set the speed.
+    // }
+}
+
+.slack__avatar {
+    width: auto;
+    height: 2.75vw;
+    margin-right: 0.25em;
+    vertical-align: baseline;
+    line-height: 1.5;
+}
+
+.slack__emoji,
+.slack__avatar--mention {
+    @extend .slack__avatar;
+    height: 1em;
+    margin-right: 0;
+}
+
+.slack--offline {
+    .slack__header,
+    .slack__message {
+        color: color($gray, darker);
+        opacity: 0.7;
+    }
+}

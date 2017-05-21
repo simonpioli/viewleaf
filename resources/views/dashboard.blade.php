@@ -5,22 +5,25 @@
     @javascript(compact('pusherKey'))
 
     <div class="dashboard" id="dashboard">
-            <google-calendar grid="a1:a2"></google-calendar>
 
-            <last-fm grid="b1:c1"></last-fm>
+        <a href="#" class="full-screen js-fullScreen">
+            <i class="full-screen__icon"></i>
+        </a>
 
-            <current-time grid="d1" dateformat="ddd DD/MM"></current-time>
+        <google-calendar calendar-id="{{-- Redacted Email Address --}}" grid="a1:b3"></google-calendar>
 
-            <packagist-statistics grid="b2"></packagist-statistics>
+        <google-calendar calendar-id="{{-- Redacted Email Address --}}" grid="c1:d3"></google-calendar>
 
-            <rain-forecast grid="c2"></rain-forecast>
+        <google-calendar calendar-id="{{-- Redacted Email Address --}}" grid="e1:f3"></google-calendar>
 
-            <internet-connection grid="d2"></internet-connection>
+        <current-time grid="g1" dateformat="ddd DD/MM"></current-time>
 
-            <github-file file-name="freek" grid="a3"></github-file>
-            <github-file file-name="rogier" grid="b3"></github-file>
-            <github-file file-name="seb" grid="c3"></github-file>
-            <github-file file-name="willem" grid="d3"></github-file>
+        <internet-connection grid="h1"></internet-connection>
+
+        <sonos grid="g2:h2"></sonos>
+
+        <slack grid="a4:h4"></slack>
+
     </div>
 
 @endsection

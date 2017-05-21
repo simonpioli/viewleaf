@@ -3,6 +3,7 @@
         <section :class="addClassModifiers('internet-connection', online ? 'up': 'down')">
             <div class="internet-connection__icon">
             </div>
+            <h2 class="internet-connection__label">{{ online ? 'ONLINE' : 'OFFLINE' }}</h2>
         </section>
     </grid>
 </template>
@@ -40,7 +41,7 @@ export default {
         determineConnectionStatus() {
             const lastHeartBeatReceivedSecondsAgo = moment().diff(this.lastHeartBeatReceivedAt, 'seconds');
 
-            this.online = lastHeartBeatReceivedSecondsAgo < 125;
+            this.online = lastHeartBeatReceivedSecondsAgo < 120;
         },
 
         getEventHandlers() {

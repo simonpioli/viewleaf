@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+// use App\Components\Sonos\FetchCurrentTrack;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 */
+
+Route::get('/dashboard/sonos', function(Request $request) {
+    try {
+        Artisan::call('dashboard:sonos');
+        Response::make('Sonos polled successfully', 200);
+    } catch (Exception $e) {
+        Response::make($e->getMessage(), 500);
+    }
+
+})->middleware('auth:api');

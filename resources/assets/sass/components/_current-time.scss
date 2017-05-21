@@ -1,11 +1,15 @@
 .current-time__content {
     @include position-center;
-
+    width: 100%;
     text-align: center;
+
+    span {
+        display: block;
+    }
 }
 
 .current-time__time {
-    @include font-sans-light;
+    @include font-sans-bold;
 
     font-size: setting($font-size, l);
     letter-spacing: .05em;

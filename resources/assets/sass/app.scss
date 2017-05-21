@@ -5,15 +5,17 @@
 @import 'settings/grid';
 @import 'settings/typography';
 
+@import 'vendor/marquee';
+
 @import 'layout/defaults';
 @import 'layout/dashboard';
 @import 'layout/graph';
 @import 'layout/grid';
 
+@import 'components/full-screen';
 @import 'components/current-time';
 @import 'components/internet-connection';
 @import 'components/google-calendar';
-@import 'components/github-file';
-@import 'components/last-fm';
-@import 'components/packagist-statistics';
+@import 'components/sonos';
 @import 'components/rain-forecast';
+@import 'components/slack';

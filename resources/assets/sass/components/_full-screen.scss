@@ -1,0 +1,32 @@
+.full-screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5vw;
+    height: 5vw;
+    padding: 0.5vw;
+    z-index: 1000;
+    background: rgba(color($gray, darker), 0.85);
+    opacity: 0;
+    transition: opacity 0.5 ease-in;
+
+    &:hover,
+    &:active {
+        opacity: 1;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.full-screen__icon {
+    display: block;
+    @include background-icon('/svg/fullscreen--open.svg');
+    opacity: 0.5;
+
+    .is-active & {
+        @include background-icon('/svg/fullscreen--close.svg');
+        opacity: 0.5;
+    }
+}

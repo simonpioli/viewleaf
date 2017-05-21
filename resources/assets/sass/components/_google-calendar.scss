@@ -1,11 +1,70 @@
-.google-calendar__events {
-    color: color($blue, light);
+.google-calendar {
+    h1 {
+        color: color($gray, lighter);
+        font-size: 1.5vw;
 
+        span {
+            display: block;
+            @include font-sans-bold;
+            font-size: 2vw;
+        }
+    }
+}
+
+.google-calendar__events {
+    color: color($gray, lightest);
     font-size: setting($font-size, s);
 }
 
+.google-calendar__status {
+    margin: 1.5vh 0;
+    font-size: 1.5vw;
+    line-height: 1;
+    // color: color($gray, lightest);
+
+    i {
+        display: inline-block;
+        margin: 0 0.75vw 0 0;
+        height: 1.5vw;
+        width: 1.5vw;
+        border-radius: 50%;
+        vertical-align: top;
+    }
+
+    &.occupied {
+        i {
+            background: color($red);
+        }
+    }
+
+    &.available {
+        i {
+            background: color($green, bright);
+        }
+    }
+}
+
+.google-calendar__event-heading {
+    padding: 1.5vh 0;
+}
+
 .google-calendar__event {
-    padding-bottom: 1.5vh;
+    position: relative;
+    padding: 1.5vh 3.75vh;
+}
+
+.google-calendar__event--now {
+    &::before {
+        content: '\27A4';
+        display: block;
+        position: absolute;
+        left: 0;
+        color: color($green, bright);
+        // color: color($gray, lighter);
+        @include font-sans-bold;
+        font-size: 0.8em;
+        line-height: 1.4;
+    }
 }
 
 .google-calendar__event__title {

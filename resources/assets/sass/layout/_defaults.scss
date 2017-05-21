@@ -33,7 +33,7 @@ h1 {
 
     margin-bottom: .5em;
 
-    color: $white;
+    // color: $white;
     opacity: .75;
 
     font-size: setting($font-size, m);
@@ -41,7 +41,7 @@ h1 {
 }
 
 h2 {
-    @include font-sans-black;
+    @include font-sans-bold;
 
     color: $white;
 

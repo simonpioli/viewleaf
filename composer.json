@@ -7,27 +7,36 @@
     ],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/simonpioli/laravel-google-calendar"
+        }
+    ],
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
-        "spatie/laravel-tail": "^1.1",
-        "spatie/last-fm-now-playing": "^1.0",
-        "spatie/laravel-google-calendar": "^1.0",
-        "graham-campbell/github": "^4.3",
         "barryvdh/laravel-ide-helper": "^2.1",
-        "league/commonmark": "^0.13.2",
-        "pusher/pusher-php-server": "^2.3",
-        "spatie/packagist-api": "^1.0",
-        "pda/pheanstalk": "^3.1",
+        "doctrine/dbal": "^2.6@dev",
+        "duncan3dc/sonos": "^1.9",
         "guzzlehttp/guzzle": "^6.2",
-        "spatie/laravel-blade-javascript": "^1.0"
+        "laravel/framework": "5.3.*",
+        "laravel/passport": "^1.0",
+        "league/commonmark": "^0.13.2",
+        "maknz/slack-laravel": "^1.0",
+        "pda/pheanstalk": "^3.1",
+        "pusher/pusher-php-server": "^2.3",
+        "simonpioli/laravel-google-calendar": "dev-master",
+        "spatie/laravel-blade-javascript": "^1.0",
+        "spatie/laravel-tail": "^1.1",
+        "vluzrmos/slack-api": "^0.4.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "symfony/dom-crawler": "3.1.*",
+        "laracasts/generators": "^1.1"
     },
     "autoload": {
         "classmap": [
@@ -61,6 +70,7 @@
             "php artisan optimize"
         ]
     },
+    "minimum-stability": "dev",
     "config": {
         "preferred-install": "dist",
         "sort-packages": true

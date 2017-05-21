@@ -56,6 +56,14 @@ $cell-height: percentage(1/$grid-rows);
     @include mod(red) {
         @include tile-color(color($red));
     }
+    @include mod(white) {
+        @include tile-color($white);
+        color: color($gray, darkest);
+    }
+    @include mod(grey) {
+        @include tile-color(color($gray, lightest));
+        color: color($gray, darkest);
+    }
 
     position: absolute;
     top: setting($grid, cell-spacing)/2;
