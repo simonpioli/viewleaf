@@ -32,10 +32,13 @@ class FetchCurrentTrack extends Command
     public function handle()
     {
         $sonos = new Network;
-        $sonos->setNetworkInterface(config('sonos.network'));
+        // $sonos->setNetworkInterface(config('sonos.network'));
+        dump($sonos->getControllers());
 
         try {
             $controller = $sonos->getControllerByRoom(config('sonos.controller'));
+
+            dump($controller);
 
             $state = $controller->getState();
             if ($controller->getState() !== Controller::STATE_PLAYING) {
@@ -44,6 +47,7 @@ class FetchCurrentTrack extends Command
             }
 
             $currentTrack = $controller->getStateDetails();
+            dump($currentTrack);
             event(new TrackIsPlaying($currentTrack));
         } catch (\Exception $e) {
             event(new NothingPlaying());
