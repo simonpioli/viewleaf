@@ -55,11 +55,17 @@ export default {
         calendarName: function() {
             return this.calendarMap[this.calendarId];
         },
+
+        // TODO: Refactor to account for concurrent bookings
+        // 1. If not occupied sig time is the start of next event
+        // 2. If occupied set sig time to end of first event then
+        // loop through and if the start of the next event is the same as the time of the previous
+        // set the end time to this event until we hit a false then break out of the loop
         nextSignificantTime: function() {
             var evt = _.first(this.events);
             if (typeof(evt) !== 'undefined') {
               var str = 'until ';
-              str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start)
+              str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start);
               return str;
             } else {
               return '';
