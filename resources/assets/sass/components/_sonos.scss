@@ -71,17 +71,17 @@
     transition: width .5s linear;
 }
 
-.sonos___artist {
+.sonos___line1 {
     @include font-sans-bold;
 
     font-size: setting($font-size, m);
 }
 
-.sonos__track {
+.sonos__line2 {
     font-size: setting($font-size, xs);
 }
 
-.sonos__user {
+.sonos__time {
     display: inline-block;
     margin-top: 1em;
     padding: .25em .5em;
