@@ -5,13 +5,13 @@
                 <div class="sonos__cover" v-if="hasCover" v-bind:style="{ backgroundImage: 'url(' + artwork + ')' }">
                 </div>
                 <div class="sonos__text">
-                    <div class="sonos__artist">
-                        {{ artist }}
+                    <div class="sonos__line1">
+                        {{ line1 }}
                     </div>
-                    <div class="sonos__track">
-                        {{ trackName }}
+                    <div class="sonos__line2">
+                        {{ line2 }}
                     </div>
-                    <span class="sonos__user">
+                    <span class="sonos__time">
                         {{ position }} / {{ duration }}
                     </span>
                 </div>
@@ -40,8 +40,8 @@ export default {
 
     data() {
         return {
-            artist: '',
-            trackName: '',
+            line1: '',
+            line2: '',
             artwork: '',
             duration: '',
             position: '',
@@ -51,7 +51,7 @@ export default {
 
     computed: {
         currentlyPlaying() {
-            return !! this.artist;
+            return !! this.line1;
         },
         hasCover() {
             return !! this.artwork;
@@ -68,8 +68,8 @@ export default {
         getEventHandlers() {
             return {
                 'Sonos.NothingPlaying': () => {
-                    this.artist = '';
-                    this.trackName = '';
+                    this.line1 = '';
+                    this.line2 = '';
                     this.artwork = '';
                     this.duration = '';
                     this.position = '';
@@ -77,8 +77,12 @@ export default {
                     this.polling = false;
                 },
                 'Sonos.TrackIsPlaying': response => {
-                    this.artist = response.trackInfo.artist;
-                    this.trackName = response.trackInfo.title;
+                    this.line1 = response.trackInfo.artist + ' – ' + response.trackInfo.title;
+                    if (response.trackInfo.stream !== null) {
+                        this.line2 = response.trackInfo.stream;
+                    } else {
+                        this.line2 = response.trackInfo.album;
+                    }
                     this.artwork = response.trackInfo.albumArt;
                     this.duration = response.trackInfo.duration;
                     this.position = response.trackInfo.position;
