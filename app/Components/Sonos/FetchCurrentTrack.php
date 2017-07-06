@@ -7,6 +7,8 @@ use App\Events\Sonos\TrackIsPlaying;
 use Illuminate\Console\Command;
 use duncan3dc\Sonos\Network;
 use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Devices\Factory;
+use duncan3dc\Sonos\Devices\Discovery;
 
 class FetchCurrentTrack extends Command
 {
@@ -31,14 +33,13 @@ class FetchCurrentTrack extends Command
      */
     public function handle()
     {
-        $sonos = new Network;
-        // $sonos->setNetworkInterface(config('sonos.network'));
-        dump($sonos->getControllers());
+        $factory = new Factory;
+        $devices = new Discovery($factory);
+        $devices->setNetworkInterface(config('sonos.network'));
+        $sonos = new Network($devices);
 
         try {
             $controller = $sonos->getControllerByRoom(config('sonos.controller'));
-
-            dump($controller);
 
             $state = $controller->getState();
             if ($controller->getState() !== Controller::STATE_PLAYING) {
@@ -47,7 +48,6 @@ class FetchCurrentTrack extends Command
             }
 
             $currentTrack = $controller->getStateDetails();
-            dump($currentTrack);
             event(new TrackIsPlaying($currentTrack));
         } catch (\Exception $e) {
             event(new NothingPlaying());
