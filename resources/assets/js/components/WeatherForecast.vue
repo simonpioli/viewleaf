@@ -1,3 +1,11 @@
+<!--
+TODO
+Basic styling for both sections
+Finish implementing the wind bearing
+Set background based on day vs night (Maybe find some animated backgrounds that match the icons)
+Implement time retrieved (maybe with relative time)
+-->
+
 <template>
     <grid :position="grid" modifiers="padded">
         <div class="weather-wrapper" v-if="typeof(forecast.current) !== 'undefined'">

@@ -46,9 +46,9 @@ class Kernel extends ConsoleKernel
             ->everyFiveMinutes();
             // ->between('7:00', '18:00');
 
-        // $schedule->command('dashboard:rain')
-        //     ->everyMinute()
-        //     ->weekdays()
+        $schedule->command('dashboard:weather')
+            ->everyFiveMinutes()
+            ->weekdays();
         //     ->between('7:00', '18:00');
     }
 }
