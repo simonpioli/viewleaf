@@ -54,13 +54,27 @@ export default {
         };
     },
 
+    updated() {
+        console.log('update');
+        global.skycons = new Skycons.Skycons({"color": "white"});
+        global.skycons.add("current-icon", this.forecast.current.icon);
+
+        _.forEach(this.forecast.hourly, function(item, key) {
+            global.skycons.add("icon-" + key, item.icon);
+        });
+
+        global.skycons.play();
+    },
+
     methods: {
         addClassModifiers,
-        CompoundUpperCase,
 
         getEventHandlers() {
             return {
                 'WeatherForecast.ForecastFetched': response => {
+                    console.log('dest');
+                    console.log(global.skycons);
+
                     var forecast;
                     var targetCity = this.city;
                     _.forEach(response.forecast, function(item, id) {
@@ -70,17 +84,7 @@ export default {
                         }
                     });
 
-                    this.skycons = new Skycons.Skycons({"color": "white"});
                     this.forecast = forecast;
-
-                    // this.skycons.add("current-icon", this.forecast.current.icon);
-
-                    // _.forEach(this.forecast.hourly, function(item, key) {
-                    //     this.skycons.add("icon-" + key, item.icon);
-                    // });
-
-                    // this.skycons.play();
-                    // console.log(this.skycons);
 
                 },
             };

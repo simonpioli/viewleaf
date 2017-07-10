@@ -24,7 +24,9 @@
 
         <sonos grid="g2:h2"></sonos>
 
-        <slack grid="a4:h4"></slack>
+        <weather-forecast grid="g3:h4" city="Tattenhall"></weather-forecast>
+
+        <slack grid="a4:f4"></slack>
 
     </div>
 
