@@ -21,7 +21,7 @@ class FetchWeatherForecast extends Command
      *
      * @var string
      */
-    protected $description = 'Fetch the weather forecast.';
+    protected $description = 'Fetch the weather forecast from DarkSky.';
 
     /**
      * Execute the console command.

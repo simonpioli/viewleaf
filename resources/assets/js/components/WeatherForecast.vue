@@ -55,12 +55,10 @@ export default {
     },
 
     updated() {
-        console.log('update');
         this.refreshIcons();
     },
 
     mounted() {
-        console.log('mounted');
         this.refreshIcons();
     },
 
@@ -76,7 +74,7 @@ export default {
             });
 
             global.skycons.play();
-        }
+        },
 
         getEventHandlers() {
             return {
@@ -91,7 +89,6 @@ export default {
                     });
 
                     this.forecast = forecast;
-
                 },
             };
         },
