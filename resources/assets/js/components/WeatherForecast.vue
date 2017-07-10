@@ -19,6 +19,7 @@
                     </li>
                 </ul>
             </section>
+            <!-- <p class="weather-updated">{{ retrieved }}</p> -->
         </div>
         <div class="weather-wrapper" v-else>
             <h1 class="weather-empty-header">No weather information available for {{ city }}</h1>
@@ -33,6 +34,7 @@ import Grid from './Grid';
 import { addClassModifiers } from '../helpers';
 import SaveState from '../mixins/save-state';
 var Skycons = require('../skycons');
+import moment from 'moment';
 
 export default {
 
@@ -50,7 +52,8 @@ export default {
 
     data() {
         return {
-            forecast: []
+            forecast: [],
+            retrieved: 'Never'
         };
     },
 
@@ -89,6 +92,7 @@ export default {
                     });
 
                     this.forecast = forecast;
+                    this.retrieved = moment();
                 },
             };
         },

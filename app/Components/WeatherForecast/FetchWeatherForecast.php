@@ -43,6 +43,7 @@ class FetchWeatherForecast extends Command
                 'temperature' => $currentCity->currently->temperature,
                 'apparentTemperature' => $currentCity->currently->apparentTemperature,
                 'windSpeed' => $currentCity->currently->windSpeed,
+                'windBearing' => $currentCity->currently->windBearing,
                 'uvIndex' => $currentCity->currently->uvIndex
             ];
 
@@ -57,6 +58,7 @@ class FetchWeatherForecast extends Command
                         'temperature' => $item->temperature,
                         'apparentTemperature' => $item->apparentTemperature,
                         'windSpeed' => $item->windSpeed,
+                        'windBearing' => $item->windBearing,
                         'uvIndex' => $item->uvIndex
                     ]);
                 }
