@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\RainForecast;
+namespace App\Events\WeatherForecast;
 
 use App\Events\DashboardEvent;
 
