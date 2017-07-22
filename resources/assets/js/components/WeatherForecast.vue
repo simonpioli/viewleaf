@@ -10,12 +10,13 @@ Implement time retrieved (maybe with relative time)
     <grid :position="grid" modifiers="padded">
         <div class="weather-wrapper" v-if="typeof(forecast.current) !== 'undefined'">
             <section class="weather-current">
-               <h1 class="weather-current__main-header">{{ forecast.current.summary }}</h1>
-               <canvas id="current-icon" class="weather-current__main-icon"></canvas>
-               <p class="weather-current__detail weather-current__temp"><span class="detail__label">Temp: </span>{{ forecast.current.temperature.toFixed(0) }}ºC</p>
-                <p class="weather-current__detail weather-current__temp-feels-like" v-if="forecast.current.temperature != forecast.current.apparentTemperature"><span class="detail__label">Feels Like </span>{{ forecast.current.apparentTemperature.toFixed(0) }}ºC</p> 
-               <p class="weather-current__detail weather-current__wind"><span class="detail__label">Wind: </span>{{ forecast.current.windSpeed.toFixed(0) }} MPH</p>
-               <div class="weather-current__detail weather-current__uv"><span class="detail__label">UV: </span>{{ forecast.current.uvIndex }}</div>
+                <h1 class="weather-current__main-header">{{ forecast.current.summary }}</h1>
+                <canvas id="current-icon" class="weather-current__main-icon"></canvas>
+                <p class="weather-current__detail weather-current__temp"><span class="detail__label">Temp: </span>{{ forecast.current.temperature.toFixed(0) }}ºC</p>
+                <!-- <p class="weather-current__detail weather-current__temp-feels-like" v-if="forecast.current.temperature != forecast.current.apparentTemperature"><span class="detail__label">Feels Like </span>{{ forecast.current.apparentTemperature.toFixed(0) }}ºC</p>  -->
+                <p class="weather-current__detail weather-current__temp-feels-like"><span class="detail__label">Feels Like </span>{{ forecast.current.apparentTemperature.toFixed(0) }}ºC</p> 
+                <p class="weather-current__detail weather-current__wind"><span class="detail__label">Wind: </span>{{ forecast.current.windSpeed.toFixed(0) }} MPH</p>
+                <p class="weather-current__detail weather-current__uv"><span class="detail__label">UV: </span>{{ forecast.current.uvIndex }}</p>
             </section>
             <section class="weather-hourly">
                 <ul class="weather-hourly__list">
