@@ -24,7 +24,7 @@
 
         <weather-forecast grid="g2:h3" city="Tattenhall"></weather-forecast>
 
-        <sonos grid="g3:h3"></sonos>
+        <sonos grid="g4:h4"></sonos>
 
         <slack grid="a4:f4"></slack>
 
