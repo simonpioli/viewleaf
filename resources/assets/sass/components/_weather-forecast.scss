@@ -41,6 +41,12 @@
 
 .weather-item {
     width: 48%;
+
+    > span,
+    > canvas {
+        display: inline-block;
+        vertical-align: middle;
+    }
     
     &::nth-child(odd) {
         margin-right: 1%;
@@ -60,6 +66,19 @@
 }
 
 .weather-item__summary {
+    font-size: map-get($font-size, xxxs);
+    line-height: 0.9;
+}
+
+.weather-item__temps,
+.weather-item__wind {
     font-size: map-get($font-size, xxs);
 }
 
+.weather-updated {
+    line-height: 1.5;
+    color: map-get($gray, default);
+    font-size: map-get($font-size, xxs);
+}
+
+.wind-direction {}
