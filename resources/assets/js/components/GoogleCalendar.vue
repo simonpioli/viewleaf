@@ -56,19 +56,14 @@ export default {
             return this.calendarMap[this.calendarId];
         },
 
-        // TODO: Refactor to account for concurrent bookings
-        // 1. If not occupied sig time is the start of next event
-        // 2. If occupied set sig time to end of first event then
-        // loop through and if the start of the next event is the same as the time of the previous
-        // set the end time to this event until we hit a false then break out of the loop
         nextSignificantTime: function() {
             var evt = _.first(this.events);
             if (typeof(evt) !== 'undefined') {
-              var str = 'until ';
-              str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start);
-              return str;
+                var str = 'until ';
+                str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start);
+                return str;
             } else {
-              return '';
+                return '';
             }
         }
     },
@@ -82,27 +77,27 @@ export default {
                 'GoogleCalendar.EventsFetched': response => {
                     var targetId = this.calendarId;
                     var calIndex = _.findIndex(response.events, function(o) {
-                      return o.id == targetId;
+                        return o.id == targetId;
                     });
 
                     if (calIndex > -1) {
-                      var events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
-                      this.events = _.filter(events, function(o){
-                        var _now = moment();
-                        return !moment(o.end).isBefore(_now);
-                      });
-                      this.occupied = false;
-                      var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
-                        var _now = moment();
-                        return _now.isBetween(moment(o.start), moment(o.end));
-                      });
+                        var events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
+                        this.events = _.filter(events, function(o){
+                            var _now = moment();
+                            return !moment(o.end).isBefore(_now);
+                        });
+                        this.occupied = false;
+                        var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
+                            var _now = moment();
+                            return _now.isBetween(moment(o.start), moment(o.end));
+                        });
 
-                      if (occupiedIndex > -1) {
-                        this.occupied = true;
-                      }
+                        if (occupiedIndex > -1) {
+                            this.occupied = true;
+                        }
                     } else {
-                      this.events = [];
-                      this.occupied = false;
+                        this.events = [];
+                        this.occupied = false;
                     }
                 },
             };
