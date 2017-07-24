@@ -49,10 +49,10 @@ class FetchWeatherForecast extends Command
 
             $forecast[$city]['hourly'] = collect();
             foreach ($currentCity->hourly->data as $key => $item) {
-                if ($key < 11) {
+                if ($key > 0 && $key < 7) {
                     $forecast[$city]['hourly']->push([
                         'time' => Carbon::createFromTimestamp($item->time)->timezone($currentCity->timezone)->format('H:s'),
-                        'summary' => $item->summary,
+                        'summary' => preg_replace('/ /', '<br>', $item->summary, 1),
                         'icon' => $item->icon,
                         'precipProbability' => $item->precipProbability,
                         'temperature' => $item->temperature,
