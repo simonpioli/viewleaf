@@ -23,6 +23,7 @@
         "laravel/passport": "^1.0",
         "league/commonmark": "^0.13.2",
         "maknz/slack-laravel": "^1.0",
+        "naughtonium/laravel-dark-sky": "^1.0@dev",
         "pda/pheanstalk": "^3.1",
         "pusher/pusher-php-server": "^2.3",
         "simonpioli/laravel-google-calendar": "dev-master",

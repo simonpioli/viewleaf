@@ -18,7 +18,7 @@ import GoogleCalendar from './components/GoogleCalendar';
 import InternetConnection from './components/InternetConnection';
 import Sonos from './components/Sonos';
 import Slack from './components/Slack';
-// import RainForecast from './components/RainForecast';
+import WeatherForecast from './components/WeatherForecast';
 
 new Vue({
 
@@ -30,7 +30,7 @@ new Vue({
         InternetConnection,
         Sonos,
         Slack,
-        // RainForecast,
+        WeatherForecast,
     },
 
     created() {

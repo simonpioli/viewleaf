@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "95234f66db4c95bd4fa5a7b5df9213b0",
+    "content-hash": "2da3046061f8079863f71454cc11384b",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -2122,6 +2122,58 @@
                 "schedule"
             ],
             "time": "2017-01-23T04:29:33+00:00"
+        },
+        {
+            "name": "naughtonium/laravel-dark-sky",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naughtonium/laravel-dark-sky.git",
+                "reference": "f0cab620a06b528f77264eab78d91af08f9c2748"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naughtonium/laravel-dark-sky/zipball/f0cab620a06b528f77264eab78d91af08f9c2748",
+                "reference": "f0cab620a06b528f77264eab78d91af08f9c2748",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~5.3|~6.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Naughtonium\\LaravelDarkSky\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jack Naughton",
+                    "email": "jack.naughton18@gmail.com",
+                    "homepage": "http://naughton.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides a Wrapper for the DarkSky API",
+            "homepage": "https://github.com/naughtonium/laravel-dark-sky",
+            "keywords": [
+                "laravel-dark-sky",
+                "naughtonium"
+            ],
+            "time": "2017-06-21T23:31:02+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -5667,6 +5719,7 @@
     "stability-flags": {
         "doctrine/dbal": 20,
         "duncan3dc/sonos": 20,
+        "naughtonium/laravel-dark-sky": 20,
         "simonpioli/laravel-google-calendar": 20
     },
     "prefer-stable": false,
