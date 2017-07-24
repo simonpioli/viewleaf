@@ -28,18 +28,20 @@ Implement time retrieved (maybe with relative time)
                         <canvas class="weather-item__icon" :id="'icon-' +  key"></canvas>
                         <span class="weather-item__summary" v-html="item.summary"></span>
                         <span class="weather-item__temps">
+                            <span class="detail__label">T: </span>
                             {{ item.temperature.toFixed(0) }}ºC&nbsp;
                             <span class="weather-item__temps__fl" v-if="item.temperature != item.apparentTemperature">F/L {{ item.apparentTemperature.toFixed(0) }}ºC</span>
                             <span class="weather-item__temps__fl">F/L {{ item.apparentTemperature.toFixed(0) }}ºC</span>
                         </span>
                         <span class="weather-item__wind">
+                            <span class="detail__label">W: </span>
                             {{ item.windSpeed.toFixed(0) }} MPH
                             <windDirection :bearing="item.windBearing"></windDirection>
                         </span>
                     </li>
                 </ul>
             </section>
-             <p class="weather-updated">Last updated: {{ retrieved }}</p> 
+             <p class="weather-updated">Last updated: {{ retrievedFormatted }}</p> 
         </div>
         <div class="weather-wrapper" v-else>
             <h1 class="weather-empty-header">No weather information available for {{ city }}</h1>
@@ -95,7 +97,7 @@ export default {
 
         refreshTime() {
             if (this.retrieved !== 'Never') {
-                this.retrievedFormatted = this.retrieved.tz('Europe/London').fromNow();
+                this.retrievedFormatted = moment(this.retrieved).tz('Europe/London').fromNow();
             }
         },
 

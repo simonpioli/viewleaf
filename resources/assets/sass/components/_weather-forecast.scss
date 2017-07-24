@@ -72,13 +72,15 @@
 
 .weather-item__temps,
 .weather-item__wind {
-    font-size: map-get($font-size, xxs);
+    font-size: map-get($font-size, xxxs);
 }
 
 .weather-updated {
-    line-height: 1.5;
     color: map-get($gray, default);
     font-size: map-get($font-size, xxs);
+    line-height: 2;
 }
 
-.wind-direction {}
+.wind-direction {
+    display: inline-block;
+}

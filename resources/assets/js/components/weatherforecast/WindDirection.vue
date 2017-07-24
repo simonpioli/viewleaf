@@ -1,8 +1,13 @@
 <template>
-  <span class="wind-direction" :style="'transform: rotate(' + bearing + ');'">↑</span>
+  <span class="wind-direction" :style="style">↑</span>
 </template>
 <script>
 export default {
-    props: ['bearing']
+    props: ['bearing'],
+    computed: {
+        style: function() {
+            return 'transform: rotate(' + this.bearing + 'deg);';
+        }
+    }
 }
 </script>
