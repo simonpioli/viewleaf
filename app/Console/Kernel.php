@@ -20,7 +20,8 @@ class Kernel extends ConsoleKernel
         \App\Components\Slack\ListChannels::class,
         \App\Components\Slack\ListUsers::class,
         \App\Components\Slack\ListEmoji::class,
-        // \App\Components\RainForecast\FetchRainForecast::class,
+        \App\Components\WeatherForecast\FetchWeatherForecast::class,
+        \App\Components\All\FetchAll::class,
     ];
 
     /**
@@ -31,24 +32,28 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('dashboard:heartbeat')
-            ->everyMinute();
-            // ->between('7:00', '18:00');
+            ->everyMinute()
+            ->weekdays()
+            ->between('7:00', '18:00');
 
         $schedule->command('dashboard:sonos')
-            ->everyMinute();
-            // ->between('7:00', '18:00');
+            ->everyMinute()
+            ->weekdays()
+            ->between('7:00', '18:00');
 
         $schedule->command('dashboard:calendar')
-            ->everyFiveMinutes();
-            // ->between('7:00', '18:00');
+            ->everyFiveMinutes()
+            ->weekdays()
+            ->between('7:00', '18:00');
 
         $schedule->command('dashboard:slack')
-            ->everyFiveMinutes();
-            // ->between('7:00', '18:00');
+            ->everyFiveMinutes()
+            ->weekdays()
+            ->between('7:00', '18:00');
 
-        // $schedule->command('dashboard:rain')
-        //     ->everyMinute()
-        //     ->weekdays()
-        //     ->between('7:00', '18:00');
+        $schedule->command('dashboard:weather')
+            ->everyFiveMinutes()
+            ->weekdays()
+            ->between('7:00', '18:00');
     }
 }

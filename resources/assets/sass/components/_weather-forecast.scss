@@ -1,0 +1,86 @@
+.weather-forecast {}
+
+.weather-current {}
+
+.weather-current__main-header {}
+
+.weather-current__main-icon {
+    float: left;
+    width: 48%;
+}
+
+.weather-current__detail {
+    clear: right;
+    float: right;
+    width: 48%;
+    font-size: map-get($font-size, default);
+}
+
+.weather-current__temp {}
+
+.detail__label {
+    color: map-get($gray, dark);
+    font-size: map-get($font-size, xs);
+}
+
+.weather-current__temp-feels-like {}
+
+.weather-current__wind {}
+
+.weather-current__uv {}
+
+.weather-hourly {
+    clear: both;
+}
+
+.weather-hourly__list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.weather-item {
+    width: 48%;
+
+    > span,
+    > canvas {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    &::nth-child(odd) {
+        margin-right: 1%;
+    }
+
+    &::nth-child(even) {
+        margin-left: 1%;
+    }
+}
+
+.weather-item__time {
+    font-size: map-get($font-size, xs);
+}
+
+.weather-item__icon {
+    height: map-get($font-size, default);
+}
+
+.weather-item__summary {
+    font-size: map-get($font-size, xxxs);
+    line-height: 0.9;
+}
+
+.weather-item__temps,
+.weather-item__wind {
+    font-size: map-get($font-size, xxxs);
+}
+
+.weather-updated {
+    color: map-get($gray, default);
+    font-size: map-get($font-size, xxs);
+    line-height: 2;
+}
+
+.wind-direction {
+    display: inline-block;
+}

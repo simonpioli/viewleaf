@@ -22,9 +22,11 @@
 
         <internet-connection grid="h1"></internet-connection>
 
-        <sonos grid="g2:h2"></sonos>
+        <weather-forecast grid="g2:h3" city="Tattenhall"></weather-forecast>
 
-        <slack grid="a4:h4"></slack>
+        <sonos grid="g4:h4"></sonos>
+
+        <slack grid="a4:f4"></slack>
 
     </div>
 
