@@ -55,14 +55,15 @@ export default {
         calendarName: function() {
             return this.calendarMap[this.calendarId];
         },
+
         nextSignificantTime: function() {
             var evt = _.first(this.events);
             if (typeof(evt) !== 'undefined') {
-              var str = 'until ';
-              str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start)
-              return str;
+                var str = 'until ';
+                str += this.occupied ? timeFormat(evt.end) : timeFormat(evt.start);
+                return str;
             } else {
-              return '';
+                return '';
             }
         }
     },
@@ -76,27 +77,27 @@ export default {
                 'GoogleCalendar.EventsFetched': response => {
                     var targetId = this.calendarId;
                     var calIndex = _.findIndex(response.events, function(o) {
-                      return o.id == targetId;
+                        return o.id == targetId;
                     });
 
                     if (calIndex > -1) {
-                      var events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
-                      this.events = _.filter(events, function(o){
-                        var _now = moment();
-                        return !moment(o.end).isBefore(_now);
-                      });
-                      this.occupied = false;
-                      var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
-                        var _now = moment();
-                        return _now.isBetween(moment(o.start), moment(o.end));
-                      });
+                        var events = response.events[calIndex].freebusy == null ? [] : response.events[calIndex].freebusy;
+                        this.events = _.filter(events, function(o){
+                            var _now = moment();
+                            return !moment(o.end).isBefore(_now);
+                        });
+                        this.occupied = false;
+                        var occupiedIndex = _.findIndex(response.events[calIndex].freebusy, function(o){
+                            var _now = moment();
+                            return _now.isBetween(moment(o.start), moment(o.end));
+                        });
 
-                      if (occupiedIndex > -1) {
-                        this.occupied = true;
-                      }
+                        if (occupiedIndex > -1) {
+                            this.occupied = true;
+                        }
                     } else {
-                      this.events = [];
-                      this.occupied = false;
+                        this.events = [];
+                        this.occupied = false;
                     }
                 },
             };
