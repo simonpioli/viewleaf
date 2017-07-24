@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         \App\Components\Slack\ListChannels::class,
         \App\Components\Slack\ListUsers::class,
         \App\Components\Slack\ListEmoji::class,
-        // \App\Components\RainForecast\FetchRainForecast::class,
+        \App\Components\WeatherForecast\FetchWeatherForecast::class,
     ];
 
     /**
@@ -32,23 +32,27 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('dashboard:heartbeat')
             ->everyMinute()
+            ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:sonos')
             ->everyMinute()
+            ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:calendar')
             ->everyFiveMinutes()
+            ->weekdays()
             ->between('7:00', '18:00');
 
         $schedule->command('dashboard:slack')
             ->everyFiveMinutes()
+            ->weekdays()
             ->between('7:00', '18:00');
 
-        // $schedule->command('dashboard:rain')
-        //     ->everyMinute()
-        //     ->weekdays()
-        //     ->between('7:00', '18:00');
+        $schedule->command('dashboard:weather')
+            ->everyFiveMinutes()
+            ->weekdays()
+            ->between('7:00', '18:00');
     }
 }

@@ -178,6 +178,7 @@ return [
         \App\Providers\CollectionServiceProvider::class,
         \Spatie\BladeJavaScript\BladeJavaScriptServiceProvider::class,
         Vluzrmos\SlackApi\SlackApiServiceProvider::class,
+        Naughtonium\LaravelDarkSky\LaravelDarkSkyServiceProvider::class,
 
     ],
 
@@ -238,6 +239,7 @@ return [
         'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
         'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
         'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
+        'DarkSky' => \Naughtonium\LaravelDarkSky\Facades\DarkSky::class,
     ],
 
 ];
