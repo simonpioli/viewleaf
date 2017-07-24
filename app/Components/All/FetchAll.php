@@ -24,7 +24,7 @@ class FetchAll extends Command
      *
      * @var string
      */
-     protected $description = 'Fetch all external data.';
+    protected $description = 'Fetch all external data.';
 
     /**
      * Execute the console command.
