@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         \App\Components\Slack\ListUsers::class,
         \App\Components\Slack\ListEmoji::class,
         \App\Components\WeatherForecast\FetchWeatherForecast::class,
+        \App\Components\All\FetchAll::class,
     ];
 
     /**
