@@ -37,7 +37,7 @@ Set background based on day vs night (Maybe find some animated backgrounds that 
                     </li>
                 </ul>
             </section>
-             <p class="weather-updated">Last updated: {{ retrievedFormatted }}</p> 
+             <p class="weather-updated">Last updated: {{ retrievedFormatted }}</p>
         </div>
         <div class="weather-wrapper" v-else>
             <h1 class="weather-empty-header">No weather information available for {{ city }}</h1>
@@ -98,12 +98,17 @@ export default {
         },
 
         refreshIcons() {
+            if (typeof(global.skycons) !== 'undefined') {
+                global.skycons.remove("current-icon");
+                _.forEach(this.forecast.hourly, function(item, key) {
+                    global.skycons.remove("icon-" + key, item.icon);
+                });
+                delete global.skycons;
+            }
             global.skycons = new Skycons.Skycons({"color": "white"});
-            global.skycons.remove("current-icon");
             global.skycons.add("current-icon", this.forecast.current.icon);
 
             _.forEach(this.forecast.hourly, function(item, key) {
-                global.skycons.remove("icon-" + key, item.icon);
                 global.skycons.add("icon-" + key, item.icon);
             });
 
