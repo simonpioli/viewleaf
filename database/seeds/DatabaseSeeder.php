@@ -37,11 +37,13 @@ class DatabaseSeeder extends Seeder
 
         $customEmoji = slack()->get('emoji.list');
 
-        foreach ($customEmoji->emoji as $name => $path) {
-            Emoji::create([
-                'label' => $name,
-                'image' => $path
-            ]);
+        if ($customEmoji->ok === true) {
+            foreach ($customEmoji->emoji as $name => $path) {
+                Emoji::create([
+                    'label' => $name,
+                    'image' => $path
+                ]);
+            }
         }
     }
 }
