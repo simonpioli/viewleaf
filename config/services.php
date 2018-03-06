@@ -38,18 +38,8 @@ return [
     'slack' => [
         'token' => env('SLACK_TOKEN'),
         'channels' => [
-            'C2LG5BF0B', // bl-cheshire
-            'C04D71B27', // bl-tannoy
-            // 'C37NR5K8T', // dashboard-test
+            // Redacted array
         ]
-    ],
+    ]
 
-    'darksky' => [
-        'locations' => [
-            'Tattenhall' => [
-                'lat' => 53.10289599999999,
-                'lon' => -2.7823094999999967
-            ]
-        ]
-    ],
 ];
