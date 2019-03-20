@@ -10,7 +10,7 @@
     "html5-marquee": "0.2.0",
     "jquery": "3.1.1",
     "laravel-echo": "1.0.1",
-    "lodash": "4.16.2",
+    "lodash": ">=4.17.11",
     "moment": "2.13.0",
     "punycode": "^2.1.0",
     "pusher-js": "3.2.1",
