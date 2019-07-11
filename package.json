@@ -18,7 +18,7 @@
     "vue-resource": "^1.0.3"
   },
   "devDependencies": {
-    "eslint": "3.7.1",
+    "eslint": "4.18.2",
     "eslint-config-spatie": "1.2.2",
     "eslint-plugin-html": "1.5.3",
     "eslint-plugin-vue": "0.1.1",
