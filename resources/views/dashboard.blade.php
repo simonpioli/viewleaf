@@ -2,7 +2,10 @@
 
 @section('content')
 
-    @javascript(compact('pusherKey'))
+    @javascript([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherChannel' => env('PUSHER_CHANNEL')
+    ])
 
     <div class="dashboard" id="dashboard">
 

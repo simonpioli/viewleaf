@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Components\GoogleCalendar;
+namespace App\Commands\GoogleCalendar;
 
 use App\Events\GoogleCalendar\EventsFetched;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Console\Command;
 use Simonpioli\GoogleCalendar\GoogleCalendar;
-use Simonpioli\GoogleCalendar\Event;
 use Google_Service_Calendar_TimePeriod;
 
 class FetchGoogleCalendarEvents extends Command
@@ -43,17 +41,18 @@ class FetchGoogleCalendarEvents extends Command
     public function handle()
     {
         $appConfig = config('app');
-        $calConfig = config('laravel-google-calendar');
+        $calConfig = config('google-calendar');
         $calendarIds = $calConfig['calendars'];
 
         $now = Carbon::now();
 
         foreach ($calendarIds as $key => $cid) {
             $fb = null;
-            $fbObject = $this->calendar->busy(null, null, $cid)->getCalendars();
+            $fbObject = $this->calendar->listFreeBusy(null, null, $cid)->getCalendars();
             // $fbObject = $this->calendar->busy(new Carbon('2017-01-16 00:00:00'), null, $cid)->getCalendars();
             if (!empty($fbObject)) {
                 $fbCalendar = $fbObject[$cid]->getBusy();
+
                 $fb = collect($fbCalendar)
                     ->map(function (Google_Service_Calendar_TimePeriod $period) use ($now, $appConfig) {
                         $start = new Carbon($period->getStart());
@@ -67,31 +66,31 @@ class FetchGoogleCalendarEvents extends Command
                         return [
                             'start' => $start->toDateTimeString(),
                             'end' => $end->toDateTimeString(),
-                            'current' => $current
+                            'current' => $current,
                         ];
                     })->toArray();
             }
 
-            // $events = collect(Event::get(Carbon::now()->startOfDay(), Carbon::now()->addDays(2)->endOfDay(), ['singleEvents' => false], $cid))
-            //     ->reject(function(Event $event) {
-            //         return $event->endDateTime < Carbon::now();
-            //     })
-            //     ->map(function (Event $event) {
-            //         return [
-            //             'id' => $event->googleEvent->getId(),
-            //             'summary' => $event->googleEvent->getSummary(),
-            //             'start' => $event->startDateTime->format(DateTime::ATOM),
-            //             'end' => $event->endDateTime->format(DateTime::ATOM),
-            //             'creator' => $event->googleEvent->getCreator()
-            //         ];
-            //     })
-            //     ->unique('id')
-
-            //     ->toArray();
+//            $evCalendar = $this->calendar->listEvents(Carbon::now()->startOfDay(), Carbon::now()->endOfDay(), ['calendarId' => $cid]);
+//            $events = collect($evCalendar)
+//                ->reject(function (Event $event) {
+//                    return $event->endDateTime < Carbon::now();
+//                })
+//                ->map(function (Event $event) {
+//                    return [
+//                        'id' => $event->googleEvent->getId(),
+//                        'summary' => $event->googleEvent->getSummary(),
+//                        'start' => $event->startDateTime->format(DateTime::ATOM),
+//                        'end' => $event->endDateTime->format(DateTime::ATOM),
+//                        'creator' => $event->googleEvent->getCreator(),
+//                    ];
+//                })
+//                ->unique('id')
+//                ->toArray();
 
             $calendars[] = [
                 'id' => $cid,
-                'freebusy' => $fb
+                'freebusy' => $fb,
             ];
         }
         event(new EventsFetched($calendars));

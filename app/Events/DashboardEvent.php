@@ -12,6 +12,6 @@ abstract class DashboardEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('dashboard');
+        return new PrivateChannel(env('PUSHER_CHANNEL'));
     }
 }

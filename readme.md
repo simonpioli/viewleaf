@@ -6,7 +6,7 @@ This repo contains the source code of our TV Dashboard.
 
 Our configured dashboard has following tiles:
 
-- Meeting Rook calendar (currently free/busy only) via [Google Calendar](https://google.com/calendar)
+- Meeting Room calendar (currently free/busy only) via [Google Calendar](https://google.com/calendar)
 - Music currently playing on the Sonos
 - Clock/date
 - Latest 'announcement' from Slack. Currently set as the most recent post from either Tannoy or Cheshire with `@channel` in the message

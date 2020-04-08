@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Sonos;
+namespace App\Commands\Sonos;
 
 use App\Events\Sonos\NothingPlaying;
 use App\Events\Sonos\TrackIsPlaying;

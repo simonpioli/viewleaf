@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Components\Slack;
+namespace App\Commands\Slack;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Vluzrmos\SlackApi\Facades\SlackChannel;
-use Vluzrmos\SlackApi\Facades\SlackUser;
+use Wgmv\SlackApi\Facades\SlackChannel;
+use Wgmv\SlackApi\Facades\SlackUser;
 use App\Events\Slack\Announcement;
 use App\Events\Slack\NoAnnouncement;
 use App\Models\SlackProfile;

@@ -17,7 +17,6 @@ import GoogleCalendar from './components/GoogleCalendar';
 import InternetConnection from './components/InternetConnection';
 import Sonos from './components/Sonos';
 import Slack from './components/Slack';
-// import RainForecast from './components/RainForecast';
 
 new Vue({
 
@@ -29,15 +28,14 @@ new Vue({
         InternetConnection,
         Sonos,
         Slack,
-        // RainForecast,
     },
 
     created() {
         this.echo = new Echo({
             broadcaster: 'pusher',
-            key: window.dashboard.pusherKey,
+            key: window.db.pusherKey,
             cluster: 'eu',
-            encrypted: true
+            forceTLS: true
         });
     },
 

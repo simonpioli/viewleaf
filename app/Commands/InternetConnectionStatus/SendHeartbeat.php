@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\InternetConnectionStatus;
+namespace App\Commands\InternetConnectionStatus;
 
 use App\Events\InternetConnectionStatus\Heartbeat;
 use Illuminate\Console\Command;

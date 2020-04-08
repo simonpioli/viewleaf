@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Components\Slack;
+namespace App\Commands\Slack;
 
 use Illuminate\Console\Command;
-use Vluzrmos\SlackApi\Facades\SlackUser;
+use Wgmv\SlackApi\Facades\SlackChannel;
 
-class ListUsers extends Command
+class ListChannels extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $signature = 'slack:users';
+    protected $signature = 'slack:channels';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Lists all the Slack users';
+    protected $description = 'Lists all the Slack channels available';
 
     /**
      * Execute the console command.
@@ -28,7 +28,7 @@ class ListUsers extends Command
      */
     public function handle()
     {
-        dump(SlackUser::lists());
+        dump(SlackChannel::lists());
         return true;
     }
 }

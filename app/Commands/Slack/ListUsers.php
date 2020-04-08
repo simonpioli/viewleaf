@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Components\Slack;
+namespace App\Commands\Slack;
 
 use Illuminate\Console\Command;
+use Wgmv\SlackApi\Facades\SlackUser;
 
-class ListEmoji extends Command
+class ListUsers extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $signature = 'slack:emoji';
+    protected $signature = 'slack:users';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Lists all the custom Slack emoji';
+    protected $description = 'Lists all the Slack users';
 
     /**
      * Execute the console command.
@@ -27,7 +28,7 @@ class ListEmoji extends Command
      */
     public function handle()
     {
-        dump(slack()->get('emoji.list'));
+        dump(SlackUser::lists());
         return true;
     }
 }

@@ -13,14 +13,13 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Components\GoogleCalendar\FetchGoogleCalendarEvents::class,
-        \App\Components\Sonos\FetchCurrentTrack::class,
-        \App\Components\Slack\FetchLatestAnnouncement::class,
-        \App\Components\InternetConnectionStatus\SendHeartbeat::class,
-        \App\Components\Slack\ListChannels::class,
-        \App\Components\Slack\ListUsers::class,
-        \App\Components\Slack\ListEmoji::class,
-        // \App\Components\RainForecast\FetchRainForecast::class,
+        \App\Commands\GoogleCalendar\FetchGoogleCalendarEvents::class,
+        \App\Commands\Sonos\FetchCurrentTrack::class,
+        \App\Commands\Slack\FetchLatestAnnouncement::class,
+        \App\Commands\InternetConnectionStatus\SendHeartbeat::class,
+        \App\Commands\Slack\ListChannels::class,
+        \App\Commands\Slack\ListUsers::class,
+        \App\Commands\Slack\ListEmoji::class,
     ];
 
     /**
@@ -45,10 +44,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('dashboard:slack')
             ->everyFiveMinutes()
             ->between('7:00', '18:00');
+    }
 
-        // $schedule->command('dashboard:rain')
-        //     ->everyMinute()
-        //     ->weekdays()
-        //     ->between('7:00', '18:00');
+    /**
+     * The Artisan commands provided by your application.
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__ . '/Commands');
     }
 }
