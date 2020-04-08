@@ -1,5 +1,8 @@
 {
-    "extends": "spatie",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script"
+    },
     "env": {
         "browser": true,
         "node": true
@@ -10,5 +13,38 @@
     },
     "plugins": [
         "vue"
-    ]
+    ],
+    "rules": {
+        "strict": ["error", "safe"],
+        "indent": ["error", 4],
+        "camelcase": ["error", {
+            "properties": "always"
+        }],
+        "semi": ["error", "always"],
+        "no-redeclare": ["error", {
+            "builtinGlobals": true
+        }],
+        "one-var": ["error", "never"],
+        "no-multi-assign": "error",
+        "no-plusplus": ["warn", {
+            "allowForLoopAfterthoughts": true
+        }],
+        "no-unneeded-ternary": "error",
+        "eqeqeq": ["error", "always"],
+        "brace-style": ["error", "1tbs", {
+            "allowSingleLine": false
+        }],
+        "no-else-return": "error",
+        "no-nested-ternary": "error",
+        "quotes": ["error", "single", {
+            "avoidEscape": true
+        }],
+        "no-eval": "error",
+        "prefer-template": "warn",
+        "no-array-constructor": "error",
+        "no-new-object": "error",
+        "object-shorthand": ["error", "never"],
+        "dot-notation": "warn",
+        "wrap-iife": ["error", "inside"]
+    }
 }

@@ -1,12 +1,6 @@
 @extends('layouts/master')
 
 @section('content')
-
-    @javascript([
-        'pusherKey' => config('broadcasting.connections.pusher.key'),
-        'pusherChannel' => env('PUSHER_CHANNEL')
-    ])
-
     <div class="dashboard" id="dashboard">
 
         <a href="#" class="full-screen js-fullScreen">
@@ -29,4 +23,11 @@
 
     </div>
 
+@endsection
+
+@section('before-js')
+    @javascript([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherChannel' => env('PUSHER_CHANNEL')
+    ])
 @endsection
