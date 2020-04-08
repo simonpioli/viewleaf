@@ -3,12 +3,11 @@ import './bootstrap.js';
 import Echo from 'laravel-echo';
 import Vue from 'vue';
 
-var VueResource = require('vue-resource');
-Vue.use(VueResource);
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
-    next();
+var axios = require('axios');
+var axiosInstance = axios.create({
+    headers: {'X-CSRF-TOKEN': Laravel.csrfToken}
 });
+Vue.prototype.$http = axiosInstance;
 
 import _ from 'lodash';
 import { launchIntoFullscreen, exitFullscreen, burnGuard } from './helpers';
@@ -57,5 +56,5 @@ new Vue({
         });
 
         burnGuard();
-    }
+    },
 });
