@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "chart.js": "2.1.4",
+    "chart.js": "2.9.4",
     "html5-marquee": "0.2.0",
     "jquery": ">=3.5.0",
     "laravel-echo": "1.0.1",
