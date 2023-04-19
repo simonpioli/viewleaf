@@ -16,7 +16,7 @@
     "jquery": ">=3.5.0",
     "laravel-echo": "1.0.1",
     "lodash": ">=4.17.19",
-    "moment": ">=2.19.3",
+    "moment": ">=2.29.4",
     "punycode": "^2.1.0",
     "pusher-js": "3.2.1",
     "vue": "^2.0.1"
